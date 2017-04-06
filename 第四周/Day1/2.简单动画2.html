@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #oBox {
+            width: 100px;
+            height: 100px;
+            background: red;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="oBox"></div>
+<script type="text/javascript" src="../utils.js"></script>
+<script type="text/javascript">
+    var oBox = document.getElementById('oBox');
+    // 简单匀速运动
+    // 规定的时间内 2000ms 以匀速运动到 最右边边界
+    // 总时间
+    var duration = 2000;
+    //    当前时间/总时间 = 当前走的路程/总路程
+    //    当前时间/总时间 = 当前走的路程 除以 总路程
+    //    当前走的路程 = 当前时间/总时间 * 总路程
+    // 10ms  当前走的路程 = 当前时间/总时间 * 总路程
+    // 20ms  当前走的路程 = 当前时间/总时间 * 总路程
+    // 30ms  当前走的路程 = 当前时间/总时间 * 总路程
+
+    // 起始位置
+    var begin = utils.css(oBox, 'left');
+    // 最大值left
+    var maxLeft = utils.win('clientWidth') - oBox.offsetWidth;
+
+    // 要走的总路程
+    var change = 800 - 100;
+    // 记录当前时间
+    var time = null;
+    //    t/duration * c 是他目前所走的路程（需要增加多少left值）
+    // 匀速运动公式
+    // 根据所花费时间 先求出 当前所移动的距离(所改变left值) t/duration * c
+    // 让后求出此时的left值为多少  起始值（起始left值） + 移动距离
+    // 匀速运动公式
+    function Linear(t, b, c, duration) {
+        return t / duration * c + b // 当前时间的left值
+    }
+
+    var timer = setInterval(function () {
+        time += 10;
+        if (time >= duration) {
+            utils.css(oBox, 'opacity', 1);
+            clearInterval(timer);
+            return;
+        }
+        // 求出 此时time时的left值
+        var curLeft = Linear(time, 0, 1, duration);
+        utils.css(oBox, 'opacity', curLeft);
+    }, 10);
+
+    //    当前时间/总时间 = 当前所走路程/总路程
+    //    当前所走路程 = 当前时间/总时间 * 总路程
+    //    此时目标位置（此时的left值） = 当前时间/总时间 * 总路程 + 起始位置
+    //    t/duration * c + b // 距离body的此时左偏移 left
+</script>
+</body>
+</html>

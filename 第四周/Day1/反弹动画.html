@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        #oBox {
+            width: 100px;
+            height: 100px;
+            background: red;
+            position: absolute;
+            left: 0;
+            top: 80px;
+        }
+        button {
+            width: 80px;
+            height: 30px;
+            text-align: center;
+            line-height: 30px;
+            margin-left: 30px;
+        }
+    </style>
+</head>
+<body>
+<button type="button">向左</button>
+<button type="button">向右</button>
+<div id="oBox"></div>
+
+<script type="text/javascript" src="../utils.js"></script>
+<script type="text/javascript">
+    var oBox = document.getElementById('oBox');
+    var btns = document.getElementsByTagName('button');
+    var btnLeft = btns[0];
+    var btnRight = btns[1];
+    // 最小偏移值
+    // curLeft >= minLeft
+    var minLeft = 0;
+    // 最大偏移值
+    var maxLeft = utils.win('clientWidth') - oBox.offsetWidth;
+
+    btnLeft.onclick = function () { // 向左走
+        move(minLeft);
+    };
+
+    btnRight.onclick = function () { // 向右走
+        move(maxLeft);
+    };
+//    var timer = null;  // 动画定时器 共享
+    // 可以保存到 当前元素自定义属性上 也可以共享
+    function move(target) {
+
+        clearInterval(oBox.timer); // 清除上一次的定时器 清除上一次的动画
+        var curLeft = utils.css(oBox, 'left');
+        oBox.timer = setInterval(function () {
+
+            // 如果当前偏移值 大于 target  向左走
+            if(curLeft > target) { //  向左走
+                curLeft -= 10;
+                if(curLeft <= target) {
+                    utils.css(oBox, 'left', 0);
+                    clearInterval(oBox.timer);
+                    return;
+                }
+                // 如果当前偏移值 小于 target  向右走
+            } else if(curLeft < target) { // 向右走
+                curLeft += 10;
+                if(curLeft >= target){
+                    utils.css(oBox, 'left', target);
+                    clearInterval(oBox.timer);
+                    return;
+                }
+            }
+            utils.css(oBox,'left', curLeft);
+        },10);
+    }
+
+</script>
+</body>
+</html>

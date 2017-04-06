@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #oBox {
+            width: 100px;
+            height: 100px;
+            background: red;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="oBox"></div>
+<script type="text/javascript" src="../utils.js"></script>
+<script type="text/javascript">
+    var oBox = document.getElementById('oBox');
+
+    // 匀速公式
+    /**
+     *
+     * @param t 当前时间
+     * @param b 起始位置
+     * @param c 总运动距离
+     * @param d 总运动时间
+     * @return {*} 此时的偏移值
+     * @constructor
+     */
+    function Linear(t, b, c, d) {
+        return t / d * c + b;
+    }
+    // 当前元素 目标值对象 duration
+    animate(oBox, {
+        left: 800,
+        top: 500,
+        opacity: 1,
+        width: 300
+    }, 2000); // 运动方式 回调函数
+
+//    animate(oBox, {
+//        left: 800,
+//        top: 500,
+//        opacity: 1,
+//        width: 300
+//    }, 2000,effect,function () {
+//
+//    });
+    // 实现动画
+    function animate(curEle, target, duration) {
+        var begin = {}; // 存储相应属性起始值
+        var change = {}; // 存储相应属性变化值
+        // 第1次遍历的时候key是left 第2次遍历的时候key是top 第3次遍历的时候key是opacity
+        for (var key in target) {
+            if (target.hasOwnProperty(key)) {
+                // 根据 target里相应的属性得到 相应属性的起始值 保存到 begin对象里
+                begin[key] = utils.css(curEle, key);
+                // 根据 target里相应的属性的目标值 - 相应属性的起始值 得到相应属性的变化值 保存到change对象中
+                change[key] = target[key] - begin[key]
+            }
+        }
+        console.log(begin);
+        console.log(change);
+        var time = null; // 记录当前时间
+        curEle.timer = setInterval(function () {
+            time += 10;
+            if(time >= duration) { // 结束条件
+                utils.css(oBox,target); // 到达边界时设置为 目标值
+                clearInterval(curEle.timer);
+                return;
+            }
+//            var curLeft = Linear(time, begin, change, duration);
+            // 计算当前时间 下的变化值 + 初始值 的 当前位置
+            for(var key in target) {
+//                var curLeft = Linear(time, begin, change, duration);
+                var curPos = Linear(time,begin[key],change[key],duration);
+                utils.css(curEle, key, curPos);
+            }
+        }, 10);
+    }
+
+
+</script>
+</body>
+</html>

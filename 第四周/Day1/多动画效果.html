@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #oBox {
+            width: 100px;
+            height: 100px;
+            background: red;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="oBox"></div>
+<script type="text/javascript" src="../utils.js"></script>
+<script type="text/javascript">
+    var oBox = document.getElementById('oBox');
+
+    // 关于Left动画参数
+    // 起始位置
+    var begin = utils.css(oBox, 'left');
+    // 最大偏移值 （包含起始位置）
+    var maxLeft = utils.win('clientWidth') - oBox.offsetWidth;
+    // 运动的总路程(需要运动的总距离)
+    var change = maxLeft - begin;
+    // 总时间
+    var duration = 2000;
+    // 当前时间
+    var time = null;
+    // 匀速公式
+    /**
+     *
+     * @param t 当前时间
+     * @param b 起始位置
+     * @param c 总运动距离
+     * @param d 总运动时间
+     * @return {*} 此时的偏移值
+     * @constructor
+     */
+    function Linear(t,b,c,d) {
+        return t/d * c + b;
+    }
+    // 目标值  top left
+
+    // top
+    var maxTop = utils.win('clientHeight') - oBox.offsetHeight;
+    var beginTop = utils.css(oBox, 'top');
+    var changeTop = maxTop - beginTop;
+    // 实现动画
+    oBox.timer = setInterval(function () {
+        time += 10;
+        if(time >= duration) {
+            utils.css(oBox, 'left', maxLeft);
+            utils.css(oBox, 'top', maxTop);
+            utils.css(oBox, 'opacity', 1);
+            clearInterval(oBox.timer);
+            return;
+        }
+        // 求出当前时间 所处的位置
+        var curLeft = Linear(time, begin, change, duration);
+        var curTop = Linear(time, beginTop, changeTop, duration);
+        var op = Linear(time, 0, 1, duration);
+        utils.css(oBox, 'left', curLeft);
+        utils.css(oBox, 'top', curTop);
+        utils.css(oBox, 'opacity', op);
+    },10);
+    // 实现动画 需要
+    //  time 当前时间
+    //  begin 起始值
+    //  change 变化值
+    // duration 过渡时间
+    // 当前运动元素 第二个 object 目标值  第三个 总时间 duration
+   animate(oBox, {
+       left: 800,
+       top: 500,
+       opacity: 1
+   }, 2000)
+
+</script>
+</body>
+</html>

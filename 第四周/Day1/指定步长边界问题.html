@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #oBox {
+            width: 100px;
+            height: 100px;
+            background: red;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="oBox"></div>
+<script type="text/javascript" src="../utils.js"></script>
+<script type="text/javascript">
+    var oBox = document.getElementById('oBox');
+    // 求出oBox最大偏移值（最大的活动范围）
+    var maxLeft = utils.win('clientWidth') - oBox.offsetWidth;
+    var step = 8;
+    // 不能保证所递增的步长 最后刚好等于最大值
+    console.log(maxLeft);
+    // 动画边界判断时候需要加上步长
+    var timer = setInterval(function () {
+        // 获取到当前的偏移值 在自身基础上 递增 step
+        var l = utils.css(oBox, 'left');
+        // 如果倒数第二步的时候加上这个步长 大于等于 最大偏移值时 直接设为最大偏移值
+        // 少走了一步
+        if(l + step >= maxLeft ) { // 边界判断需要加上步长 少走一步
+             console.log(l);
+             console.log(maxLeft);
+             setTimeout(function () {
+                 utils.css(oBox, 'left', maxLeft); // 设为刚好的最大值
+             },2000);
+
+            clearInterval(timer); // 结束动画
+            return;
+        }
+        l += step; // 每10毫秒递增一次
+        utils.css(oBox, 'left',l);
+    },10);
+</script>
+</body>
+</html>

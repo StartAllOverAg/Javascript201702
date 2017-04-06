@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #oBox {
+            width: 100px;
+            height: 100px;
+            background: red;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="oBox"></div>
+<script type="text/javascript" src="../utils.js"></script>
+<script type="text/javascript">
+    // setTimout的动画 需要把上一次没用的定时器清除掉
+     var oBox = document.getElementById('oBox');
+     var count = 0;
+     // 最大偏移值
+     var maxLeft = utils.win('clientWidth') - oBox.offsetWidth;
+     var step = 8;
+     var timer = setTimeout(move,10);
+     // 这样会产生多个定时器
+     function move() {
+         // 清除没用的定时器
+         clearTimeout(timer);
+         var l = utils.css(oBox, 'left');
+         if(l + step >= maxLeft){
+             utils.css(oBox, 'left', maxLeft);
+             clearTimeout(timer);
+             return;
+         }
+         l += step;
+         utils.css(oBox, 'left', l);
+         timer = setTimeout(move,10);
+     }
+
+//     var timer = setTimeout(move,1000);
+//     // 这样会产生多个定时器 我们应该把没用的定时器清除
+//     function move() {
+//         // 清除当前上一次定时器
+//         clearTimeout(timer);
+//         count++;
+//         if(count > 10) {
+//             clearTimeout(timer);
+//             return;
+//         }
+//         console.log(count);
+//         timer = setTimeout(move,1000);
+//     }
+</script>
+</body>
+</html>
