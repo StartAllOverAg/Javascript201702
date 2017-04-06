@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script type="text/javascript">
+    // 回调函数：在方法A里 把 方法B当做一个参数 在方法A调用执行 何时执行执行多少次都可以
+
+    function fn1() {
+        console.log('fn1');
+    }
+//    function fn2(callBack) {
+////        setTimeout(function () {
+//            callBack(); // 回调函数中一般调用情况下 this 都是为window
+////        },1000);
+////
+////        callBack();
+////        callBack();
+//    }
+////    fn2(fn1);
+//    fn2(function () {
+//        console.log(this);
+//        console.log('我是一个fn');
+//    })
+
+    [1,2,3].sort(function (a, b) {
+
+    });
+    function fe1(callBack) {
+           console.log(this);
+           console.log('fe1');
+
+            callBack.call(this,100, 200);
+
+
+    }
+//    fe1(function (a,b) {
+//        console.log(this);
+//         console.log(a,b);
+//    });
+    var obj = {fn:fe1, name: 'zhufeng'};
+    obj.fn(function (a,b) {
+            console.log(this);
+             console.log(a,b);
+        });
+</script>
+</body>
+</html>

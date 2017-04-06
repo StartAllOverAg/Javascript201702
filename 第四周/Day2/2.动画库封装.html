@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #oBox {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            position: absolute;
+            left: 10px;
+            top: 0;
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="oBox"></div>
+<script type="text/javascript" src="../utils.js"></script>
+<script type="text/javascript" src="../animate2.js"></script>
+<script type="text/javascript">
+    var oBox = document.getElementById('oBox');
+    // 把所有需要的参数放到一个对象里
+
+    // ele: 执行动画元素
+    // target: 目标值
+    // duration: 过渡时间
+    // effect: 运动方式
+    // callBack: 回调函数
+    zfAnimate({
+        target: {
+            left: 500,
+            top: 300,
+            opacity: 1
+        },
+        ele: oBox,
+        duration: 2000,
+        effect: 2,
+        callBack: function () {
+             console.log('callBack');
+             utils.css(this, 'backgroundColor', 'pink')
+        }
+    })
+
+
+</script>
+</body>
+</html>

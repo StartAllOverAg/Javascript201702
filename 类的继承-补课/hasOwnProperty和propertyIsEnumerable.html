@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <script type="text/javascript">
+    // 可枚举和不可枚举
+    // 枚举是一一列举出来
+    // 可枚举可以用for in 语句遍历列举出来的
+      var obj = {name: 'zhufeng'};
+      // Object.prototype.say = 'hello';
+    //  for (var key in obj) {
+    //     if(obj.hasOwnProperty(key)) { //预防将原型上可枚举的其他属性遍历出来 遍历对象时 通常会用hasOwnProperty
+    //        console.log(key);
+    //     }
+    //  }
+    //  propertyIsEnumerable 检测属性是不是当前对象可枚举的自身属性
+    //  如果是当前对象可枚举的自身属性返回true 否则false
+    //  for (var key in obj) {
+    //    console.log(key);
+    //    console.log(obj.propertyIsEnumerable(key));
+    //  }
+    //  for (var key in obj) {
+    //    if(obj.propertyIsEnumerable(key)) {
+    //       console.log(key);
+    //    };
+    //  }
+    var arr = [1,2];
+    // arr的length 是arr自身属性 但是 是不可枚举的自身属性
+     console.log(arr.propertyIsEnumerable('length')); // false
+    // for (var key in arr) {
+    //     console.log(key);
+    //     console.log(arr.propertyIsEnumerable(key));
+    // }
+    </script>
+  </body>
+</html>

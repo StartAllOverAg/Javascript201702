@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #oBox {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            position: absolute;
+            left: 10px;
+            top: 0;
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="oBox"></div>
+<script type="text/javascript" src="../utils.js"></script>
+<script type="text/javascript" src="animate.js"></script>
+<script type="text/javascript">
+    var oBox = document.getElementById('oBox');
+    zfAnimate(oBox, {
+        left: 500,
+        top: 300,
+        opacity: 1
+    },2000,function () {
+//        console.log(this);
+          utils.css(this, {
+              left: 400,
+              top: 200
+          });
+    });
+
+</script>
+</body>
+</html>
