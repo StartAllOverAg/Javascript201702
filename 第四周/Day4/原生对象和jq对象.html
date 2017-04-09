@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="oDiv1"></div>
+<div id="oDiv2"></div>
+<div class="oDiv3"><span>nihao</span></div>
+<script type="text/javascript" src="jquery-1.11.3.js"></script>
+<script type="text/javascript">
+    $(function () {
+        var oDiv1 = document.getElementById('oDiv1');
+        console.dir(oDiv1);
+        // 将原生对象转化为 jq 对象
+//        console.log($(oDiv1));
+//        console.log(jQuery(oDiv1));
+//
+//        console.log($('#oDiv2'));
+
+         // 将jQ 对象转化为 原生对象
+//        console.log($('#oDiv2')[0]);
+//        console.log($('#oDiv2').get(0));
+
+        // 根据指定索引 找到 对应的jq对象
+//        console.log($('div').eq(0));
+
+
+        // 回到上一次的状态
+        console.log($('#oDiv1').end()); // this.constructor(null).
+        console.log($('div'));
+        console.log($('div').end());
+
+
+        console.log($('.oDiv3').children());
+        console.log($('.oDiv3').children().end());
+
+
+    });
+</script>
+</body>
+</html>

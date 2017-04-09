@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        * {
+
+        }
+
+        #oDiv1 {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+        }
+
+        .oDiv2 {
+            width: 100px;
+            height: 100px;
+            background-color: green;
+        }
+
+        div {
+            background-color: blue !important;
+            margin-bottom: 20px;
+        }
+
+        .oDiv3, .oDiv4 {
+            width: 200px;
+            height: 100px;
+        }
+
+        #oDiv5 > span {
+            font-size: 40px;
+            color: #87ff8b;
+        }
+    </style>
+</head>
+<body>
+<!--<div id="oDiv1"></div>-->
+<!--<div class="oDiv2"></div>-->
+<!--<div class="oDiv3"></div>-->
+<!--<div class="oDiv4"></div>-->
+<div id="oDiv5">
+    <span class="span1">我是一个span</span>
+    <div class="sd2">
+        <span class="span2">我是div中的span</span>
+        <h3 class="span2"></h3>
+    </div>
+    <span>我是老二 span</span>
+    <span>我是老三 span</span>
+</div>
+<script type="text/javascript" src="jquery-1.11.3.js"></script>
+<script type="text/javascript">
+    $(function () {
+        // id 选择器$('#id'); 匹配id名为oDiv1 的元素
+//         console.log($('#oDiv1'));
+
+        // class 类名选择器$('.className') 匹配class名 为oDiv2 的元素
+//         console.log($('.oDiv2'));
+
+        // 标签元素选择器  获取 所有div元素
+//        console.log($('div'));
+
+        // 群组选择器 获取 id名为oDiv1 和 class名为oDiv2 的元素
+//        console.log($('#oDiv1, .oDiv2'));
+
+        // 后代选择器  匹配id名为oDiv5中的 后代元素中的所有span
+//        console.log($('#oDiv5 span'));
+
+        // 后代中 所有class名为span2的后代元素span
+//        console.log($('#oDiv5 span.span2'));
+
+        // 匹配后代中 所有类名为span2的元素
+//        console.log($('#oDiv5 .span2'));
+        // 匹配指定父元素 中的所有span子元素
+//        console.log($('#oDiv5 > span'));
+
+        // 匹配指定元素 后面紧跟的 下一个元素
+//        console.log($('.span1 +'));
+//        console.log($('.span1').next());
+
+        // 匹配指定元素 后面的所有 同辈元素
+//        console.log($('.span1 ~ ')); // div span span
+//        console.log($('.span1 ~ span'));
+//        console.log($('.sd2 ~'));
+//        console.log($('.sd2').nextAll());
+
+        // 匹配页面中的所有元素
+//        console.log($('*'));
+
+    });
+</script>
+</body>
+</html>

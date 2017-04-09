@@ -3,7 +3,7 @@
     // 可视区域容器
     var outer = document.getElementById('outer');
     var wid = outer.clientWidth;
-    console.log(wid);
+
     // 图片外层 平移容器
     var swiper = document.getElementById('swiper');
     // 获取swiper下所有图片
@@ -31,7 +31,6 @@
 
     getData(bindData); // 将bindData 作为一个回调函数放到getData里 当接收到数据后让bindData 在里面执行 并且把请求到的数据传递到bindData里
     var length;
-
     function bindData(data) {
         // 总共图片个数（包含重复的最后一张）
         length = data.length + 1;
@@ -61,8 +60,7 @@
     }
 
     // 图片延迟加载
-    var timer;
-
+    // var timer;
     function delayImg() {
         for (var i = 0; i < oImgs.length; i++) {
             (function (n) {
@@ -88,7 +86,7 @@
         }
         // 图片加载完后执行自动轮播
         // 每3000毫秒 平移一次 让autoMove执行一次
-        timer = setInterval(autoMove, 3000);
+        swiper.timer = setInterval(autoMove, 3000);
     }
 
     var step = 0; // 记录当前图片索引
@@ -142,13 +140,13 @@
     outer.onmouseover = function () {
         // 滑入显示左右切换
         oLeft.style.display = oRight.style.display = 'block';
-        clearInterval(timer);
+        clearInterval(swiper.timer);
     };
     // 滑出 执行新动画
     outer.onmouseout = function () {
         // 滑出隐藏左右切换
         oLeft.style.display = oRight.style.display = 'none';
-        timer = setInterval(autoMove, 3000);
+        swiper.timer = setInterval(autoMove, 3000);
     };
     // 但我点击 左边时 让step-- 应为 左边按钮平移 和 自动轮播以及 右边按钮是相反方向平移（step++）
     oLeft.onclick = function () {
@@ -159,20 +157,11 @@
             // 此时 紧接着  让动画 从倒数第二张 开始
             step = length - 2;
         }
-        zfAnimate({
-            ele: swiper,
-            target: {
-                left: step * -wid
-            },
-            duration: 300
-        });
-        // 焦点同步
-        changeFocus(step);
+        autoMove(step);
     };
     // 右切换
     oRight.onclick = function () {
         // 点击一次 平移一次 让autoMove执行一次
-
         autoMove();
     }
 })();
