@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        #oDiv {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+<ul>
+    <li>11</li>
+    <li>22</li>
+    <li class="three">33</li>
+    <li>44</li>
+    <li>55</li>
+    <li>66</li>
+</ul>
+<div id="oDiv"></div>
+<script type="text/javascript" src="../js/jquery-1.11.3.js"></script>
+<script type="text/javascript">
+    // 工具方法
+    $(function () {
+        // 遍历方法 $.each 可以遍历 任何对象  $().each
+        var arr = [2, 3, 4, 5, 5];
+        // ind 索引  item 当前项
+//         $.each(arr, function (ind, item) {
+////             console.log(this); // 当前项
+////              console.log(ind, item);
+//              console.log(ind + ' : ' + this);
+//         });
+        // key value
+//        $.each({name: 'zhufeng', age: 10}, function (key, value) {
+////               console.log(this); 代表value
+////               console.log(key+' : ' + this);
+////               console.log(key+' : ' + value);
+//
+//        });
+//         遍历jq对象
+//        $.each($('li'), function (ind, item) {
+//            console.log(this);
+////            console.log(ind, item);
+//        })
+//         元素集合
+//          $.each(document.getElementsByTagName('li'), function (ind, item) {
+//            console.log(this);
+////            console.log(ind, item);
+//        });
+
+//        console.log($('li').get(0)); // 根据索引 直接返回当前元素
+//        console.log($('li').get());// 把集合中所有元素放到一个数组里
+
+//        遍历jq对象
+//        $('li').each(function (ind, item) {
+        console.log(this); // 当前项
+//            console.log(ind, item);
+//        });
+
+//        var arr = [1,2,3,6,9];
+//        $(arr).each(function (ind, item) {
+//            console.log(ind, item);
+//        });
+        // 退出each
+//        $([1,2,3]).each(function (ind, item) {
+//            if(item === 2) {
+//                return false; // 退出each
+//            }
+//            console.log(this);
+//        })
+
+        // grep map
+
+//        var newArr = $.grep([1,2,4,5,2,2], function (item, ind ) {
+//              console.log(ind, item);
+////              return  item >2; // 返回当前项中 大于2的 组成一个新数组
+//              var bool =  item === 2;
+//              console.log(bool); // 当前项为2时 为true
+//              return  bool; // 如果true就将当前项返回 如果false不返回 返回当前项中 大于2的 组成一个新数组
+//        });
+//        console.log(newArr);
+//        var obj = [{id:1},{id:2},{id:3},{id:4},{id:5}];
+//        var newObj = $.grep(obj, function (item, ind) {
+//               return  item.id > 3;
+//        });
+//        console.log(newObj); //  [{id:4},{id:5}];
+
+//       map 修改
+//         var arr = [1,2,4,5];
+//         var newArr = $.map(arr, function (item, ind) {
+//               console.log(ind, item);
+////               return  item * 2;
+//               return  [item, 'id'+item];
+//         });
+//        console.log(newArr); // [2, 4, 8, 10]
+//        console.log(newArr);// [1, "id1", 2, "id2", 4, "id4", 5, "id5"]
+
+//       console.log($('li'));
+//        console.log($('li').length); // 对象访问
+//        console.log($('li'));
+//        console.log($('li').size());
+
+        var $li = $('li:first');
+        // 获取元素在同辈集合中 索引位置
+//        console.log($li.index());
+//       $('li').each(function () {
+//           $(this).click(function () {
+//                  alert($(this).index());
+//           });
+//       });
+        // jq对象$('.three')在 $('li')中索引位置
+//        console.log($('li').index($('.three')));
+
+        // 类数组转数组 likeArray
+//        var lis = document.getElementsByTagName('li');
+//        console.log(lis);
+//        console.log($.makeArray(lis));
+        // JQ元素对象 转化为 数组
+//        console.log($('li'));
+//        console.log($('li').toArray());
+
+        // 去重 直接在原有上去重
+//        var arr = [1, 1, 1, 2, 2, 2, 3, 3];
+//        console.log($.unique(arr));
+//        console.log(arr); //
+//        合并数组
+//        console.log($.merge([1, 2], [3, 4,'like']));
+//        [1, 2].concat([3, 4,'like'])
+
+        var first = {name: 'cuyuiyang', id: 1, age: 20};
+        var second = {name: 'zhenan', id: 2, say: 'hello'};
+        // 将第二个参数对象合并到 第一个对象里面  修改第一个first
+//        $.extend(first,second);
+//        console.log(first); // {name: "zhenan", id: 2, age: 20, say: "hello"}
+
+//      var $obj = $.extend({},first,second);
+//     console.log($obj);
+
+//       $.extend($('#oDiv')[0].style,{
+//           width: '200px',
+//           height: '300px',
+//           backgroundColor: 'blue'
+//       });
+
+//        Object.assign($('#oDiv')[0].style,{
+//            width: '200px',
+//            height: '300px',
+//            backgroundColor: 'green'
+//        })
+
+//        检测数据类型
+//        console.log($.type(12));
+//        console.log($.type([]));
+//     检测一个对象是否为空
+//        console.log($.isEmptyObject({})); // true
+//        console.log($.isEmptyObject({name:'zhufeng'})); // false
+
+        function A() {
+
+        }
+
+        var a = new A;
+        // 检测 是 不是 {} 和 new Object 创建的对象
+//        var obj = {};
+//        var obj2 = new Object;
+//        console.log($.isPlainObject(obj));
+//        console.log($.isPlainObject(obj2));
+//        console.log($.isPlainObject(a));
+//        function fe() {
+//
+//        }
+//        console.log($.isWindow(window));
+//        console.log($.isFunction(fe));
+//        console.log($.isNumeric(1));
+
+//      在 jq对象上添加插件方法
+//        $.extend({
+//            myAdd: function (a,b) {
+//                return a + b;
+//            }
+//        });
+//        console.log($.myAdd(10, 20));
+//        console.dir($);
+
+//   在jq原型上扩展属性方法
+//        $.fn.extend({
+//            mySay: function () {
+//                console.log('nihao');
+//            }
+//        });
+//        $('li').mySay();
+//        console.dir($);
+
+        //    // 函数三种角色  普通函数 普通对象 类
+//    function Utils() {
+//
+//    }
+//    // 当作一个普通对象 自身添加属性
+//    Utils.each = function () {
+//        console.log('add');
+//    };
+//    // 作为一个类 在原型上添加公有属性和方法
+//    Utils.prototype.each = function () {
+//        console.log('sayadd');
+//    };
+//    Utils.each();
+//    var utils = new Utils;
+//    utils.each()
+
+//      去除首尾空格
+//        console.log($.trim('  ni hao ')); // "ni hao"
+//
+//        JSON字符串转换为 JSON对象
+         var jsonStr = '{"name":"zhufeng","id": 10}';
+//         console.log(jsonStr);
+//        console.log($.parseJSON(jsonStr));
+        var jsonObj = $.parseJSON(jsonStr);
+//        var jsonObj = $.parseXML();
+
+//        get请求 需要我们给后台传的参数 以这种形式 url？wd=nihao&rsv_spt=1 拼接到url问号后面
+//        var obj = {
+//            wd: 'nihao',
+//            rsv_spt:1
+//        };
+//        var url =  'http://www.baidu.com/s?'+$.param(obj);
+//      http://www.baidu.com/s?wd=nihao&rsv_spt=1
+
+//        $.serialize();
+//        $.serializeArray()
+    });
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

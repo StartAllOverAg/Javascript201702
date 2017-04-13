@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+        .oDiv {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            padding: 10px;
+            border: 2px solid blue;
+            left: 50px;
+            top: 50px;
+        }
+        .div1 {
+            position: relative;
+            padding: 20px;
+            border: 1px solid red;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="div1">
+    <div class="oDiv"></div>
+</div>
+<a  id="btn" href="javascript:;">娱乐</a>
+<a  id="btn1" href="javascript:;">综艺</a>
+<div id="view"></div>
+<!--<a href="http://www.baidu.com">baidu</a>-->
+<script type="text/javascript" src="jquery-1.11.3.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('#btn').click(function () {
+            $('#view').load('./index.html');
+        });
+        $('#btn1').click(function () {
+            $('#view').load('./yule.html');
+        });
+//        $('a').click(function () {
+//           alert('nihao');
+//        });
+//        $('.oDiv').css({
+//            backgroundColor: 'red',
+//            width: 200
+//        });
+        // 获取多项样式属性 返回一个普通样式对象  获取的多项 以键值对的形式 放在对象里返回
+//        console.log($('.oDiv').css(['width','height','backgroundColor']));
+//         width 和 padding 没有关系
+//        console.log($('.oDiv').height()); // number 100 不带单位
+//        console.log($('.oDiv').css('height')); // string 100px 带单位
+
+
+//        console.log($('.oDiv').width()); // number 100
+//        console.log($('.oDiv').css('width')); // // string 100px 带单位
+
+//        console.log($('.oDiv').innerWidth()); // clientWidth
+//        console.log($('.oDiv').innerHeight()); // clientHeight
+
+//        console.log($('.oDiv').outerWidth()); // offsetWidth
+//        console.log($('.oDiv').outerHeight()); // offsetHeight
+
+        // 参数 true
+//        console.log($('.oDiv').outerWidth(true)); // offsetWidth + 外边距
+//        console.log($('.oDiv').outerHeight(true)); // offsetHeight + 外边距
+
+//        获取滚动条高度
+//        console.log($(window).scrollTop());
+
+//        设置滚动条高度
+//        $(window).scrollTop(200);
+
+//        console.log($(window).scrollLeft());
+//        setTimeout(function () {
+//            $(window).scrollLeft(200);
+//        },200);
+//     距离视口偏移值
+        console.log($('.oDiv').offset());// {top: 20, left: 20}
+
+//        console.log($('.oDiv').offsetParent());
+//        父级参照物 偏移值
+//        console.log($('.oDiv').position()); //  {top: 50, left: 50}
+
+    });
+</script>
+</body>
+</html>

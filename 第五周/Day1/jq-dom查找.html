@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--<div id="oDiv1">-->
+<!--<div id="oDiv2">-->
+<!--<ul>-->
+<!--<li class="first">11</li>-->
+<!--<li>22</li>-->
+<!--<li>33</li>-->
+<!--<li class="four">44</li>-->
+<!--<li>55</li>-->
+<!--<li>66</li>-->
+<!--</ul>-->
+<!--</div>-->
+<!--</div>-->
+
+<div>div1 <span class="div2">div1的儿子</span></div>
+<div class="div2">div2</div>
+<div>div3
+    <div class="div2"> div3的儿子</div>
+    <div><span class="div2"> div3的孙子</span></div>
+</div>
+
+<script type="text/javascript" src="jquery-1.11.3.js"></script>
+<script type="text/javascript">
+    $(function () {
+//        prev 上一个哥哥元素（jQ对象）
+//        $('.four').prev().css('backgroundColor', 'red');
+//        next 下一个弟弟元素（jQ对象）
+//        $('.four').next().css('backgroundColor', 'blue');
+//        prevAll 所有哥哥元素（jQ对象）
+//        $('.four').prevAll().css('backgroundColor', 'red');
+//        nextAll 所有弟弟元素（jQ对象）
+//        $('.four').nextAll().css('backgroundColor', 'red');
+//        所有子元素
+//        console.log($('ul').children());
+//        得到父元素
+//        console.log($('.four').parent());
+//      得到所有祖先元素     一直找html为止
+//        console.log($('.four').parents());
+//        查找所有祖先元素中 id为oDiv1的元素
+//        console.log($('.four').parents('#oDiv1'));
+//      得到所有兄弟元素
+//        console.log($('.four').siblings());
+//        console.log($('.four').siblings('li:first'));
+//        得到所有兄弟元素中 类名为first的元素
+//        console.log($('.four').siblings('.first'));
+
+//        filter  find   children
+//        console.log($('div'));
+//        从匹配的元素集合对象中 过滤出 类名为div2 的元素
+//        console.log($('div')); // 匹配页面中所有div
+//           从匹配到页面中所有div 中 过滤出来 类名为div2的div元素
+//        console.log($('div').filter('.div2'));
+
+//        find 从指定的元素的后代元素中  查找 类名为 div2的元素
+//        把$('div')匹配得到每一项 看做一个父级容器 然后通过find里面指定的选择器去  每一个容器里后代元素 中 进行查找匹配项
+//        console.log($('div').find('.div2'));
+
+//        匹配所有子元素
+//        console.log($('div').children('span'));
+
+    });
+</script>
+</body>
+</html>

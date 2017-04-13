@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<!--<div class="oDiv"><h3 class="h3"> h3333333</h3></div>-->
+<!--<strong>strong</strong>-->
+<!--<div class="oDiv"></div>-->
+<!--<div class="oDiv"></div>-->
+<!--<span> hello world  <i>nihao</i></span>-->
+<!--<span> hello world</span>-->
+<!--<span> hello world</span>-->
+<!--<span> hello world</span>-->
+<div class="hello"><i>hello world</i></div>
+<strong> nihao strong</strong>
+<script type="text/javascript" src="jquery-1.11.3.js"></script>
+<script type="text/javascript">
+    // DOM
+    //    $(function () {
+    //        console.log(this); // document
+    //    });
+    //    console.log(this);
+
+    $(function () {
+        // dom 操作
+//           console.log($('<h3>hello Jquery!</h3>'));  // 创建节点
+        // 插入jq对象节点
+//           var $h3 = $('<h3>hello Jquery!</h3>');
+//            $('.oDiv').append($h3);
+        // 插入原生dom节点
+//           var h3 = document.createElement('h3');
+//           h3.innerHTML = 'hello vueJs';
+
+        // 插入节点
+        // 内部插入到容器底部
+//           append  在匹配的容器中 插入节点
+//           $('.oDiv').append($('.h3')); // 移动节点
+//           $('.oDiv').append($('.h3')[0]); // 移动节点
+//           $('.oDiv').append(function (ind) {
+//               console.log(this); // 当前操作的 oDiv 原生对象
+//               if(ind === 0){
+//                   return '<h2> reactjs</h2>';
+//               } else if(ind === 1){
+//                   return '<h2> webpack</h2>';
+//               } else {
+//                   return '<h2> angularjs</h2>';
+//               }
+//           });
+
+        // appendTo  将节点添加到 指定容器
+//           $('<h2> angularjs</h2>').appendTo($('.oDiv'));
+//           $('<h2> angularjs</h2>').appendTo($('.oDiv'));
+
+
+        // prepend  在指定容器 内部 前面 插入 节点
+//           $('.oDiv').prepend('<h2> angularjs</h2>');
+//           $('.oDiv').prepend(function (ind, htmls) {
+//               // 当前 匹配的容器索引  htmls 当前容器已有的内容
+//               console.log(arguments);
+//               return '<h2> angularjs</h2>';
+//           });
+//           $('.oDiv').prepend(function () {
+//               console.log(arguments);
+//           });
+
+//        prependTo 将节点 插入到 指定容器内部 前面
+//            $('<h2> angularjs</h2>').prependTo($('.oDiv'));
+
+//            外部插入
+//           在指定容器外部（同辈元素） 后面添加节点
+//           $('.oDiv').after('<h2> angularjs</h2>');
+//           $('.oDiv').after($('strong'));
+//           在指定容器外部（同辈元素） 前面添加节点
+//           $('.oDiv').before('<h2> express</h2>');
+//           setTimeout(function () {
+//               $('.oDiv').before($('strong')); // 移动到 $('.oDiv')前面
+//           },1000);
+
+        // 将节点 插入到 指定的元素 外部后面
+//           $('<h2> express</h2>').insertAfter($('.oDiv'));
+        // 将节点 插入到 指定的元素 外部前面
+//           $('<h2> express</h2>').insertBefore($('.oDiv'));
+
+
+//            包裹节点
+//              $('span').wrap('<strong/>');
+//              $('span').wrap(function (n) {
+//                  console.log(this);
+//                  if(n%2){
+//                      return '<strong/>';
+//                  } else {
+//                      return '<i/>';
+//                  }
+//
+//              });
+//              $('span').wrap('<strong>zhufeng</strong>');
+
+//           $('span').wrap('<strong/>');
+        // 将匹配到的 元素 包裹到一起 包裹 所有
+//           $('span').wrapAll('<strong/>');
+//           包裹指定容器 的子内容
+//           $('span').wrapInner('<strong/>');
+
+//        将包裹的i的元素移除 移除父级
+//          $('i').unwrap();
+//        remove 移除节点
+//           setTimeout(function () {
+//               $('div i').remove();
+//           },1000);
+//        var $i = $('div i').remove();
+//        console.log($i);
+//        remove 移除节点 也会移除绑定事件（原有事件也会被移除） 并移除节点后 返回移除节点的jq对象
+//        $('div i').click(function () {
+//            console.log('click');
+//        });
+//        var $i;
+//        setTimeout(function () {
+//            $i = $('div i').remove();
+//        },2000);
+//        setTimeout(function () {
+
+//            $('div strong').append($i);
+//        },5000);
+
+//        detach 移除节点 保留事件
+//        var $i;
+//        setTimeout(function () {
+//            $i = $('div i').detach();
+//        }, 2000);
+//        setTimeout(function () {
+//            $('div strong').append($i);
+//        }, 5000);
+//        $('div i').click(function () {
+//            console.log('click');
+//        });
+//        复制节点  clone 不加true 不会复制事件  为true 复制事件
+//        $('body').append($('div').clone());
+//        $('body').append($('div').clone(true));
+
+//         替换节点
+//           用 其他节点 替换指定节点
+//        $('<i>nihao</i>').replaceAll($('div.hello'));
+//         将指定节点 替换成 其他节点
+//        $('div.hello').replaceWith('<i>nihao1111111</i>')
+//        $('div.hello').replaceWith($('strong'))
+
+    });
+</script>
+</body>
+</html>

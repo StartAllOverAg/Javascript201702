@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+   .oDiv{
+       width: 100px;
+       height: 100px;
+       background-color: red;
+   }
+    </style>
+</head>
+<body>
+<button id="btn">button</button>
+<div class="oDiv"></div>
+<script type="text/javascript" src="jquery-1.11.3.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('#btn').click(function () {
+//            slow  normal  fast
+//            $('.oDiv').stop().toggle('fast'); // 显示/隐藏切换
+//           $('.oDiv').stop().toggle(3000, function() {
+//                console.log('结束');
+//               }); // 显示/隐藏切换
+        });
+        // 滑入/滑出
+//        $('#btn').hover(function () {
+//           console.log('mouseover'); //  滑入
+//        }, function () {
+//           console.log('mouseout'); // 滑出
+//        });
+
+//        slideToggle 上拉收起 fadeToggle 渐入 渐出
+        $('#btn').on('click', function () {
+//            $('.oDiv').stop().slideToggle('fast');
+//            $('.oDiv').fadeToggle();
+            $('.oDiv').fadeTo('normal', 0.3);
+        });
+
+//        $('body').click(function () {
+//             console.log('body');
+//        });
+//        一次性事件
+//       $('#btn').one('click',function () {
+//          console.log('one');
+//       });
+//        触发事件
+        $('#btn').on('click', function () {
+            console.log('click');
+        });
+        setTimeout(function () {
+//            $('#btn').trigger('click');
+            $('#btn').triggerHandler('click'); // 不会事件冒泡
+        }, 2000);
+        // 自定义事件
+//        $('#btn').on('myClick', function () {
+//            console.log('MyClick');
+//        });
+//        setTimeout(function () {
+//            $('#btn').trigger('myClick');
+//            $('#btn').triggerHandler('myClick');
+//        }, 2000);
+
+        // toggle  hover
+
+
+    });
+</script>
+</body>
+</html>

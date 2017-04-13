@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3>引入外部文件</h3>
+<button>引入js</button>
+<a href="">综艺</a> <a href="">娱乐</a>
+<div id="view"></div>
+<script type="text/javascript" src="../js/jquery-1.11.3.js"></script>
+<script type="text/javascript">
+    $(function () {
+//        $.ajax({
+//            url: './data.txt', // text/plain
+//            type: 'GET',
+//            data: {
+//                uid: 1,
+//                name: 'liwenli'
+//            },
+//            dataType: 'json',
+//            success: function (result) {
+//                console.log(typeof result);
+//                console.log(result);
+////                console.log($.parseJSON(result));
+//            }
+//        });
+
+//        发送get请求  param1 请求URL  param2  传给后台的数据 param3 请求回调
+//        $.get('./data.txt',{name:'wenli',id:2}, function (res) {
+//            console.log(res);
+//        });
+
+//        发送post请求
+//        $.post('./data.txt',{name:'wenli',id:2}, function (res) {
+//            console.log(res);
+//        });
+
+//        请求JSON数据
+//        $.getJSON('./data.txt', {name: 'wenli', id: 2}, function (res) {
+//            console.log(res);
+//        });
+//        $.extend({
+//            myGetScript: getScript
+//        });
+//        function getScript(url,callback) {
+//            var script = document.createElement('script');
+//            script.src = url;
+//            script.type = 'text/javascript';
+//            document.body.appendChild(script);
+//            callback();
+//        }
+//        $('button').click(function () {
+////            $.getScript('./index.js', function () {
+////               console.log('引入外部js');
+////            });
+//            $.myGetScript('./index.js', function () {
+//               console.log('成功引入外部js');
+//            });
+//        });
+
+
+        // load 加载外部页面
+
+        $('a').eq(0).click(function () {
+            $('#view').load('./template/index2.html');
+            return false;
+        });
+        $('a').eq(1).click(function () {
+            $('#view').load('./template/index1.txt');
+            return false;
+        })
+    });
+</script>
+</body>
+</html>

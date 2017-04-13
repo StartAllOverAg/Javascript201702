@@ -1,0 +1,4 @@
+<h3>欢迎来到娱乐页</h3>
+<script type="text/javascript">
+    alert('欢迎来到娱乐页');
+</script>

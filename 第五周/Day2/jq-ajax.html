@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script type="text/javascript" src="../js/jquery-1.11.3.js"></script>
+<script type="text/javascript">
+    $(function () {
+//       var xhr = new XMLHttpRequest;
+        $.ajax({
+            type: 'GET', //请求方式 GET POST          JSONP(跨域请求)
+            url: './data.json', // 请求url地址 请求接口地址（https://www.baidu.com/s?） (./data.json/s?wd=liwenli&uid=1)
+            data: { // 查询参数 向后台发送数据 (url?wd=liwenli&uid=1)
+                wd: 'liwenli',
+                uid: 1
+            },
+//            dataType: 'text', // 预测指定后台返回的数据类型 text json jsonp html script 如果不写 就自动根据文件mime类型 进行处理
+            async: true,  // 默认true 异步请求  false 同步
+            // 请求成功后回调 第一个形参 就是 请求成功返回的数据
+            success: function (result) {
+                console.log(result);
+                if(result.error === 0){ // 判断响应回来的数据是否正确
+                    console.log(result['data']);
+                }
+//                else if(result.error === 1003){
+//                    alert('服务器错误')
+//                }
+
+            },
+            timeout: 3000, // 设置超时时间 等待后台响应超过3秒后 自动结束请求
+            error: function (res) { // 错误回调
+               alert('请重新刷新页面！');
+            }
+        });
+        console.log('ajax后面的代码');
+    });
+</script>
+</body>
+</html>

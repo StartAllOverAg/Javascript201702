@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        .oDiv{
+            width: 100px;
+            height: 100px;
+            background-color: green;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <button id="btn"> 点击</button>
+</div>
+
+<div class="oDiv"></div>
+<ul>
+    <li>11</li>
+    <li class="sec">22</li>
+    <li>33</li>
+</ul>
+<script type="text/javascript" src="jquery-1.11.3.js"></script>
+<script type="text/javascript">
+    $(function () {
+//       $('#btn').click(function () {
+//           console.log('btn1');
+//       }).mouseover(function () {
+//           console.log('over');
+//       });
+        // on  bind
+//        $('#btn').on('click', function () {
+//            console.log('onclick');
+//        });
+        // 给多个事件行为 绑定同一个处理函数
+//      $('#btn').on('click  mouseover', function () {
+//          console.log('onclick');
+//      })
+//        $('ul li:first').on('click', function () {
+//            console.log(this);
+//        });
+        //  ul后代元素中 筛选出  索引为1的那个li 绑定click事件
+//        $('ul').on('click', 'li:eq(1)', function () {
+//            console.log(this);
+//        });
+
+//        $('ul').on('click', '.sec', function () {
+//            console.log(this);
+//        });
+//        type 事件类型  [筛选器 selector  事件数据data] 处理函数 function
+//        $('ul').on('click', 'li:even,li:odd',{name:'zhufeng'}, function (event) {
+//            console.log(this);
+//            console.log(event.data);
+//        });
+
+//        namespace
+//        $('#btn').on('click.btn1', function () {
+////            $('.oDiv').slideToggle(); // 上拉收起复合写法
+//        }).on('click', function () {
+////            console.log('btnClick');
+//        }).on('mouseover.btn1', function () {
+////            console.log('mouseover');
+//        }).mouseout(function () {
+//            console.log('mouseout');
+//        });
+
+
+//        function fe1() {
+//            console.log('fe1');
+//        }
+//
+//        function fe2() {
+//            console.log('fe2');
+//        }
+//        $('#btn').on('click',fe1).on('click',fe2);
+
+        // 移除事件
+//        setTimeout(function () {
+//            $('#btn').off('click'); // 移除指定事件行为
+//            $('#btn').off(); // 移除当前元素所有事件行为
+//            $('#btn').off('click.btn1'); // 根据命名空间的相应事件类型移除
+//            $('#btn').off('.btn1'); // 根据命名空间移除
+//            $('#btn').off('mouseout');
+            // 同一事件行为 移除 某一个 处理函数
+//            $('#btn').off('click',fe1);
+//        }, 3000);
+
+
+        // bind 绑定事件
+//        type 事件类型      事件数据 data  处理函数 function
+//        $('#btn').bind('click',{name:'zhufeng'}, function (e) {
+//            console.log(e.data);
+//        });
+
+//        $('#btn').bind('click mouseover',{name:'zhufeng'}, function (e) {
+//            console.log(e.data);
+//        });
+
+//       $('#btn').bind('click', function (e) {
+//            console.log('bindClick');
+//        }).bind('mouseover.over', function () {
+//           console.log('bindOver');
+//       });
+        // unbind
+//        setTimeout(function () {
+//            $('#btn').unbind(); // 移除所有
+//            $('#btn').unbind('click'); // 移除某个行为
+//            $('#btn').unbind('.over'); // 命名空间
+//            $('#btn').off();
+//        }, 1000);
+
+//        $('button').on('click', function () {
+//            console.log('button');
+//        });
+//        $('button').bind('click', function () {
+//            console.log('button');
+//        });
+
+//        预留事件 解决未来添加的元素 绑定事件
+//        $('body').on('click', 'button', function () {
+//            console.log('button');
+//        });
+//       预留事件 解决未来添加的后代元素 绑定事件
+        $('.container').delegate('button', 'click', function () {
+//            console.log(this);
+            console.log('delegate-click');
+        });
+        $('.container').delegate('button', 'mouseover', function () {
+//            console.log(this);
+            console.log('delegate-mouseover');
+        });
+
+//        $('body').append('<button>btn2</button>');
+//        $('.container').append('<button>btn2</button>');
+//
+//        $('.container button').click(function () {
+//            console.log('button-click');
+//        });
+//        setTimeout(function () {
+            //移除 delegate绑定的事件
+//            $('.container').undelegate('click');
+//            $('.container').undelegate();
+//        },2000);
+
+
+
+
+    });
+</script>
+</body>
+</html>

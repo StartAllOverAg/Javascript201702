@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        a{
+          text-decoration: none;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        #outer {
+            position: relative;
+            width: 700px;
+            height: 300px;
+            border: 1px solid blue;
+            box-shadow: 2px 2px 10px #a6c9ff;
+            margin: 20px auto;
+            background: url("./images/default.gif") no-repeat center;
+        }
+
+        #wrap img {
+            display: none;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 700px;
+            height: 300px;
+        }
+
+        #wrap img:nth-child(1) {
+            /*display: block;*/
+        }
+
+        #focus {
+            width: 125px;
+            position: absolute;
+            bottom: 3px;
+            left: 0;
+            right: 0;
+            margin: auto;
+            overflow: hidden;
+            zoom: 1;
+            background: rgba(0, 0, 0, .5);
+            padding: 5px 0 5px 5px;
+            border-radius: 20px;
+        }
+
+        #focus li {
+            float: left;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #f5f5f5;
+            margin-right: 5px;
+        }
+
+        #focus li.selected {
+            background: #ffaa2a;
+        }
+        #outer .oLeft, #outer .oRight {
+            display: none;
+            position: absolute;
+            left: 0;
+            top: 50%;
+            margin-top: -25px;
+            width: 30px;
+            height: 50px;
+            text-align: center;
+            line-height: 50px;
+            background: rgba(0,0,0,.3);
+            color: #fff;
+            font-size: 25px;
+        }
+
+        #outer .oRight{
+            left: auto;
+            right: 0;
+        }
+
+        #outer a:hover {
+            background: #000;
+        }
+
+    </style>
+</head>
+<body>
+<div id="outer">
+    <div id="wrap">
+        <!--<img src="./images/1.jpg" alt="">-->
+        <!--<img src="./images/2.jpg" alt="">-->
+        <!--<img src="./images/3.jpg" alt="">-->
+        <!--<img src="./images/4.jpg" alt="">-->
+        <!--<img src="./images/5.jpg" alt="">-->
+    </div>
+    <ul id="focus">
+        <!--<li class="selected"></li>-->
+        <!--<li></li>-->
+        <!--<li></li>-->
+        <!--<li></li>-->
+        <!--<li></li>-->
+    </ul>
+    <a class="oLeft" href="javascript:;"> < </a>
+    <a class="oRight" href="javascript:;"> > </a>
+</div>
+<script type="text/javascript" src="js/jquery-1.11.3.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+</body>
+</html>
