@@ -1,0 +1,18 @@
+在滑过或滑出时 计算角度
+
+1.先 计算出 鼠标此时 坐标 x,y
+2.利用 rad = Math.atan2(y,x) 计算出弧度
+3.将弧度换算成 角度 =180/Math.PI * rad
+
+暂时先把此时的角度求出来
+
+计算出x轴
+var x = e.clientX - box.offsetLeft - box.offsetWidth/2
+计算y轴
+var y = box.offsetHeight/2 - e.clientY + box.offsetTop 
+
+// 根据x轴和y轴计算出rad 弧度
+var rad = Math.atan2(y,x);
+
+// 计算出角度
+角度 = 180/Math.PI * rad(弧度)

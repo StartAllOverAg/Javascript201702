@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        html,body{
+            height: 1000px;
+        }
+        #title {
+            background: blue;
+        }
+
+    </style>
+</head>
+<body>
+<input type="text" id="oText">
+<h3 id="title">点我~</h3>
+<script type="text/javascript">
+    // 常用事件：onclick、onmouseover、onmouseout、onmouseenter、onmouseleave、
+//    onload、onscroll、oninput、onfoucs、onblur、onchange、onresize(窗口改变事件)、ondblclick、onmousemove、onmouseup、onmousedown、onkeydown、onkeyup onmousewheel(鼠标滚轮事件)...
+    var oText  = document.getElementById('oText');
+
+//    title.onclick = function () {
+//        console.log('点');
+//    };
+
+    // 事件：一个行为 天生自带的属性
+    //  事件行为
+    //  事件处理函数(监听函数)
+
+//    oText.onchange = function () {
+//        console.log('触发');
+//    }
+//     window.onresize = function () {
+//         console.log('窗口改变');
+//     }
+//        title.ondblclick = function () {
+//            console.log('触发');
+//        }
+
+//    title.onmousedown = function () {
+//         console.log('按下');
+//    };
+//    title.onmouseup = function () {
+//        console.log('抬起');
+//    }
+//    oText.onkeyup = function () { // 键盘按下后抬起事件
+//        console.log('输入1')
+//    };
+//    oText.onkeydown = function () { // 键盘按下事件
+//        console.log('输入2')
+//    };
+    console.dir(oText);
+//    window.onmousewheel = function (e) {
+//          console.log('鼠标滚轮');
+//          console.log(e.wheelDelta);// -120 往下滚动 120往上滚动
+//    }
+
+
+</script>
+</body>
+</html>

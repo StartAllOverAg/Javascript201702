@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        #box {
+            width: 650px;
+            margin: 20px auto;
+            overflow: hidden;
+        }
+
+        #box li {
+            position: relative;
+            float: left;
+            width: 120px;
+            height: 120px;
+            overflow: hidden;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        #box li img {
+            width: 100%;
+            height: 100%;
+        }
+
+        #box li div.mask {
+            position: absolute;
+            left: 0;
+            top: 120px;
+            width: 120px;
+            height: 120px;
+            text-align: center;
+            line-height: 120px;
+            color: #fff;
+            font-size: 25px;
+            background: rgba(0, 179, 138, .9);
+        }
+    </style>
+</head>
+<body>
+<ul id="box">
+    <li><img src="./images/1.jpg" alt="">
+        <div class="mask">爱奇艺</div>
+    </li>
+    <li><img src="./images/2.jpg" alt="">
+        <div class="mask">中国电信</div>
+    </li>
+    <li><img src="./images/3.png" alt="">
+        <div class="mask">滴滴打车</div>
+    </li>
+    <li><img src="./images/4.jpg" alt="">
+        <div class="mask">用友政务</div>
+    </li>
+    <li><img src="./images/5.png" alt="">
+        <div class="mask">美团外卖</div>
+    </li>
+</ul>
+<script type="text/javascript" src="js/jquery-1.11.3.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('#box li').each(function () {
+            fn($(this));
+        });
+        function fn($box) {
+            var $mask = $box.children('.mask');
+            var res; // 判断方向依据 0 左边 1下边 2右边 3上边
+            var boxW = $box.outerWidth();
+            var boxH = $box.outerHeight();
+            $box.mouseenter(function (e) { // 滑入时
+                var $this = $(this);
+                // 鼠标坐标 x,y
+                var x = e.clientX - $this.offset().left - $this.outerWidth() / 2;
+                var y = $this.outerHeight() / 2 - e.clientY + $this.offset().top;
+                res = getDirection(x, y);
+                // 执行动画前 先设置好$mask 的起始位置 后 再执行动画
+                switch (res) {
+                    case 0: // 左边
+                        $mask.css({left: -boxW, top: 0});
+                        break;
+                    case 1: // 下边
+                        $mask.css({left: 0, top: boxH});
+                        break;
+                    case 2: // 右边
+                        $mask.css({left: boxW, top: 0});
+                        break;
+                    case 3: // 上边
+                        $mask.css({left: 0, top: -boxH});
+                        break;
+                }
+                // 开始执行动画 不管从哪个方向滑入 目标值 都是 {left: 0, top: 0}
+                $mask.stop().animate({left: 0, top: 0}, 'fast');
+            });
+            $box.mouseleave(function (e) { // 滑出时
+                var $this = $(this);
+                // 鼠标坐标 x,y
+                var x = e.clientX - $this.offset().left - $this.outerWidth() / 2;
+                var y = $this.outerHeight() / 2 - e.clientY + $this.offset().top;
+                res = getDirection(x, y);
+                var target = null;
+                switch (res) {
+                    case 0: // 左边
+                        target = {left: -boxW, top: 0};
+                        break;
+                    case 1: // 下边
+                        target = {left: 0, top: boxH};
+                        break;
+                    case 2: // 右边
+                        target = {left: boxW, top: 0};
+                        break;
+                    case 3: // 上边
+                        target = {left: 0, top: -boxH};
+                        break;
+                }
+                $mask.stop().animate(target, 'fast');
+            });
+
+            function getDirection(x, y) {
+                // 计算弧度
+                var rad = Math.atan2(y, x);
+                // 计算角度
+                var angle = 180 / Math.PI * rad;
+                // 计算出[0,360]区间 (angle+180) 角度 / 90 四舍五入的 结果 %4
+                // 根据取模后的结果 0 左边 1下边 2右边 3上边
+                res = Math.round((angle + 180) / 90) % 4;
+                return res;
+            }
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        div{
+            width: 100px;
+            height: 100px;
+            border: 1px solid blue;
+        }
+    </style>
+</head>
+<body>
+<div id="btn"><h3>你好</h3></div>
+<script type="text/javascript">
+    var btn = document.getElementById('btn');
+//    e 事件对象 是一个 事件行为 直接绑定的处理函数第一个形参 浏览器天生给传递进去的
+//    事件对象 是一个对象数据类型的值 里面保存着事件的相关信息
+//    btn.onclick = fn;
+//    function fn(e) {
+//        console.log(e);
+//    }
+    btn.onclick = function (e) {
+//        console.log(window.event); // 兼容ie 6 - 8
+        e = e || window.event; // 解决事件对象 兼容
+        console.log(e);
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        #outer {
+            width: 200px;
+            height: 200px;
+            background-color: red;
+            padding: 50px;
+            box-sizing: border-box;
+        }
+        #inner {
+            width: 100px;
+            height: 100px;
+            background-color: blue;
+        }
+    </style>
+</head>
+<body>
+<div id="outer">
+    <div id="inner"></div>
+</div>
+<script type="text/javascript">
+    // mouseover 和mouseout   ,mouseenter 和mouseleave (滑入/滑出)
+    outer.onmouseover = function () {
+           console.log('outer')
+    };
+    inner.onmouseover = function () {
+        console.log('inner');
+    };
+
+//    mouseenter 和mouseleave 没有冒泡传播
+    //    outer.onmouseenter = function () {
+//        console.log('outer')
+//    };
+//    inner.onmouseenter = function () {
+//        console.log('inner');
+//    };
+</script>
+</body>
+</html>

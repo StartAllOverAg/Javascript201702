@@ -1,0 +1,35 @@
+1.获取数据
+2.绑定数据
+3.图片延迟加载
+4.自动轮播
+5.焦点同步
+6.滑入滑出控制
+7.焦点点击
+8.左右切换
+
+css 样式 定位到一起（堆叠）
+ img  opacity 0 zindex 0
+ 第一张 img zindex 1（延迟加载时候 opacity 再 过渡到 1）
+
+
+
+
+延迟加载：让第一张 opacity 0 过渡到 opacity 1
+
+
+堆叠再一起
+
+开始的时候
+第一张zindex 1 opacity 1
+其他 zindex 0 opacity 0
+
+
+动画渐变前：先让当前的 这张图片 zindex 1 其他的 zindex 0
+动画渐变时： 当前图片 opacity 由 0 过渡到 1
+动画结束后：其他图片 opacity 0
+
+渐变是由 开始opacity 0 过渡到 opacity 1 实现的
+
+也就是说 要保证 此时渐变的图片 opacity 最开始 为 0  才能实现渐变效果
+
+z-index  透明度

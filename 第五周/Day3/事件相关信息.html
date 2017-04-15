@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        html, body {
+            height: 1000px;
+        }
+        div {
+            width: 100px;
+            height: 100px;
+            border: 1px solid blue;
+        }
+        #outer {
+            width: 300px;
+            height: 300px;
+            background: red;
+            margin: 20px auto;
+            padding: 50px;
+            box-sizing: border-box;
+        }
+        #inner {
+            width: 200px;
+            height: 200px;
+            background: #a9faff;
+        }
+        #title {
+            background: #fff;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div id="outer">
+    <div id="inner">
+        <h3 id="title">hello world!</h3>
+    </div>
+</div>
+<div id="btn"><h3>你好</h3></div>
+<a id="link" href="http://www.baidu.com">跳转到百度</a>
+<input type="text" id="oText">
+<script type="text/javascript">
+    var btn = document.getElementById('btn');
+    var link = document.getElementById('link');
+    oText.onkeydown = function (e) {
+        e = e || window.event;
+        console.log(e.keyCode); // 键码值
+
+    };
+    // 事件传播-事件冒泡：当前元素相关事件(click)触发时 同时也会触发上级 相关事件(click) 一直到 document
+//    document.body.onclick = function () {
+//       console.log('body');
+//    };
+//    outer.onclick = function () {
+//        console.log('outer');
+//    };
+//    inner.onclick = function () {
+//        console.log('inner');
+//    };
+
+    outer.onclick = function (e) {
+        e = e || window.event;
+//        console.log(' pageX: ' + e.pageX);
+//        console.log(' pageY: ' + e.pageY);
+//        console.log(' clientX: ' + e.clientX);
+//        console.log(' clientY: ' + e.clientY);
+        console.log('offsetX: ' + e.offsetX);
+        console.log('offsetY: ' + e.offsetY);
+
+//          console.log('screeX: ' + e.screenX);
+//          console.log('screeY: ' + e.screenY);
+//
+//        console.log(document.documentElement.scrollLeft || document.body.scrollLeft);
+//        console.log(document.documentElement.scrollTop || document.body.scrollTop);
+//        // ie 6-8 pageY pageX 下写法  clientX/clientY +  scrollLeft/scrollTop
+//        var  pagey = e.clientY + (document.documentElement.scrollTop || document.body.scrollTop);
+//        var pagex = e.clientX + (document.documentElement.scrollLeft || document.body.scrollLeft);
+//
+//        var pageY = e.pageY || pagey;
+//        var pageX = e.pageX || pagex;
+//
+//        console.log(pageY, pageX);
+
+//        e.stopPropagation(); // 阻止冒泡传播
+//        e.cancelBubble = true; // ie 阻止冒泡传播
+//        e.stopPropagation ? e.stopPropagation() : e.cancelBubble = true;
+    };
+    link.onclick = function (e) {
+//        console.log(123);
+        e = e || window.event;
+//      alert(e.preventDefault);
+//      e.preventDefault(); // 阻止默认行为
+//      e.returnValue = false; // ie 6 - 8 阻止默认行为
+        e.preventDefault ? e.preventDefault() : e.returnValue = false;
+//      return false;
+        e.stopPropagation(); // 阻止冒泡传播
+    };
+    btn.onclick = function (e) {
+        // 事件对象兼容 ie 6 - 8
+        e = e || window.event;
+
+        // 事件源兼容 ie 6 - 8
+        var target = e.target || e.srcElement;
+
+        // 阻止默认行为 兼容 ie 6 - 8
+        e.preventDefault ? e.preventDefault() : e.returnValue = false;
+
+//        if(target.tagName == 'DIV') {
+//            console.log('我是div');
+//        } else if(target.tagName == 'H3') {
+//            console.log('我是H3');
+//        }
+
+    };
+    /**
+     * 事件传播 -> 事件委托
+     * 捕获阶段
+     * 冒泡阶段
+    /**
+     *  e 事件对对象 存储事件的相关信息
+     *  e.type  事件类型
+     *  e.target/e.srcElement 事件源
+     *  e.preventDefault/e.returnValue = false 、return false 阻止默认行为
+     *  e.stopPropagation/e.cancelBubble = true 阻止冒泡传播
+     *  e.clientX/e.clientY 当前鼠标距离浏览器窗口左边距离/ 上边距离
+     *  e.pageX/e.pageY 当前鼠标距离body左边距离/上边距离
+     *  e.screenX/e.screenY 当前鼠标距离屏幕左边距离/上边距离
+     *  e.keyCode 键码值
+     *
+     *  e.offsetX/e.offsetY 距离事件源 左边距离 和 上边距离 ie 的两个属性
+     *
+     */
+</script>
+</body>
+</html>

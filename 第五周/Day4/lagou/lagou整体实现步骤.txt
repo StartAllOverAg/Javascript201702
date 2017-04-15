@@ -1,0 +1,66 @@
+布局
+每个盒子下面都有一个自己的遮罩层
+遮罩层针对于 该盒子（overflow:hidden 溢出隐藏） 定位
+
+把遮罩层默认 定位到 盒子低下  top为父级盒子的高度
+
+ul里包含 每个盒子li  每个li里面 一个img 一个 遮罩层div mask 
+遮罩层div 针对 li定位到 top 值为li的高度 left 0
+遮罩层滑入的最终目标值 都是{left:0,top:0}
+盒子宽 120 高120
+   
+先要判断鼠标滑入或滑出方向
+计算 鼠标的 x y坐标                            180/π = 1/1度的弧度
+根据坐标 计算出弧度 （Math.atan2(y,x)根据坐标就算出弧度）  180°= π 360° = 2π
+                        1弧度的角度值  = 180度/π* 1弧度
+                      Math.PI 就是 圆周率 π
+根据弧度 计算出角度  该弧度的角度值 = 180°/Math.PI * rad（该弧度）
+然后根据角度值分为四个区间 没90度为一个区间
+
+得到方向后 开始 滑入/滑出  
+
+滑入
+1.从左边滑入
+滑入时 先设置 mask的起始位置
+mask left = - 120
+mask top = 0
+开始进行滑过动画 
+$mask.animate({left: 0, top:0},'fast')
+
+2.从上边滑入
+滑入时 先设置 mask的起始位置
+ mask left = 0
+ mask top = -120
+开始进行滑过动画 
+$mask.animate({left: 0, top:0},'fast')
+
+3.从右边滑入
+滑入时 先设置 mask的起始位置
+ mask left = 120
+ mask top = 0
+开始进行滑过动画 
+$mask.animate({left: 0, top:0},'fast')
+
+4.从下边滑入
+滑入时 先设置 mask的起始位置
+ mask left = 0
+ mask top = 120
+
+开始进行滑过动画 
+$mask.animate({left: 0, top:0},'fast')
+
+滑出动画
+
+1.从左边滑出
+滑出时 
+$mask.animate({left: -120, top:0},'fast')
+
+2.从上边滑出
+$mask.animate({left: 0, top: -120},'fast')
+
+3.从右边滑出
+$mask.animate({left: 120, top: 0},'fast')
+4.从下边滑出
+
+$mask.animate({left: 0, top: 120},'fast')
+

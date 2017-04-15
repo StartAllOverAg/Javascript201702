@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        #lists {
+            width: 660px;
+            margin: 20px auto;
+            overflow: hidden;
+        }
+
+        #lists li {
+            position: relative;
+            float: left;
+            width: 120px;
+            height: 120px;
+            margin-right: 10px;
+            overflow: hidden;
+            border: 1px solid red;
+            cursor: pointer;
+        }
+
+        #lists li img {
+            width: 100%;
+            height: 100%;
+        }
+
+        #lists li div.mask {
+            position: absolute;
+            top: 120px;
+            left: 0;
+            width: 120px;
+            height: 120px;
+            text-align: center;
+            line-height: 120px;
+            background: rgba(0, 179, 138, .9);
+            color: #fff;
+            font-size: 25px;
+        }
+    </style>
+</head>
+<body>
+<ul id="lists">
+    <li><img src="./images/1.jpg" alt="">
+        <div class="mask">爱奇艺</div>
+    </li>
+    <li><img src="./images/2.jpg" alt="">
+        <div class="mask">中国电信</div>
+    </li>
+    <li><img src="./images/3.png" alt="">
+        <div class="mask">滴滴打车</div>
+    </li>
+    <li><img src="./images/4.jpg" alt="">
+        <div class="mask">用友政务</div>
+    </li>
+    <li><img src="./images/5.png" alt="">
+        <div class="mask">中金支付</div>
+    </li>
+</ul>
+<script type="text/javascript" src="js/jquery-1.11.3.js"></script>
+<script type="text/javascript">
+    $(function () {
+        // 获取 所有盒子
+        $('#lists li').each(function () {
+            fn($(this)); // $(this)遍历出来的 当前项的jq对象
+        });
+        // 绑定事件 $box 当前盒子
+        function fn($box) {
+            // 获取当前 盒子里的 mask (遮罩层)
+            var $mask = $box.children('.mask');
+            // 得到盒子的高度和宽度
+            var boxW = $box.outerWidth();
+            var boxH = $box.outerHeight();
+            var res = null;
+
+            // 滑入
+//          var x = e.clientX - box.offsetLeft - box.offsetWidth/2
+//          var y = box.offsetHeight/2 - e.clientY + box.offsetTop
+            $box.mouseenter(function (e) {
+                // 计算出x轴和y轴        ({left: l,top:t}).left
+                var x = e.clientX - $box.offset().left - $box.outerWidth() / 2;
+                var y = $box.outerHeight() / 2 - e.clientY + $box.offset().top;
+                // 计算方向
+                var res = getLocation(x, y);
+                // 设置滑过动画前的mask的起始位置
+                switch (res) {
+                    case 0: //左边
+                        $mask.css({left: -boxW, top: 0});
+                        break;
+                    case 1: // 下边
+                        $mask.css({left: 0, top: boxH});
+                        break;
+                    case 2: // 右边
+                        $mask.css({left: boxW, top: 0});
+                        break;
+                    case 3: // 上边
+                        $mask.css({left: 0, top: -boxH});
+                        break;
+                }
+                // 开始执行滑过动画
+                $mask.stop().animate({left: 0, top: 0}, 'fast');
+            });
+            // 滑出
+            $box.mouseleave(function (e) {
+                // 计算出x轴和y轴        ({left: l,top:t}).left
+                var x = e.clientX - $box.offset().left - $box.outerWidth() / 2;
+                var y = $box.outerHeight() / 2 - e.clientY + $box.offset().top;
+                var target = null;
+                // 计算方向
+                res = getLocation(x, y); // res  离开的方向
+                // 判断滑出动画
+                switch (res) {
+                    case 0: // 左边
+                        target = {left: -boxW, top: 0};
+                        break;
+                    case 1: // 下边
+                        target = {left: 0, top: boxH};
+                        break;
+                    case 2: // 右边
+                        target = {left: boxW, top: 0};
+                        break;
+                    case 3: // 上边
+                        target = {left: 0, top: -boxH};
+                        break;
+                }
+                $mask.stop().animate(target, 'fast');
+            });
+
+//           计算弧度 角度 最终计算出来结果 是方向
+//           返回方向值 作为判断依据
+            function getLocation(x, y) {
+                // 计算方向代码
+                // 计算弧度
+                var rad = Math.atan2(y, x);
+                // 计算出角度 角度区间[-180,180]   angle + 180 按照[0,360]
+                var angle = 180 / Math.PI * rad;
+                // 按照这个区间来计算 [0, 360] 然后除以90 然后在四舍五入 方向值[0,1,2,3,4]  0/4 左边  1 下边  2右边 3上边  取模后判断方向区间[0,1,2,3]
+                res = Math.round((angle + 180) / 90) % 4;  // 取模后根据res的值 判断方向[0,1,2,3] 0 左边 1 下边 2 右边 3上边
+//              [0,1,2,3,4] 取模后 [0,1,2,3]  0 左边 1 下边 2 右边 3上边
+//              0%4 === 0   // 如果取模后 是 0 左边
+//              1%4 === 1   // 如果取模后 是 1 下边
+//              2%4 === 2   // 如果取模后 是 2 右边
+//              3%4 === 3   // 如果取模后 是 3 上边
+//              4%4 === 0   // 如果取模后 是 0 左边
+                return res;
+            }
+
+        }
+    });
+</script>
+</body>
+</html>
