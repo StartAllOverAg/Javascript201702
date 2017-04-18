@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+
+    </style>
+</head>
+<body>
+<button id="btn"> 点击</button>
+<script type="text/javascript">
+    // addEventListener(添加事件)/ removeEventListener（移除事件）
+    // IE Low attachEvent添加事件/detachEvent移除事件
+
+    // 区别
+    // addEventListener 中this 当前绑定事件的元素
+    // attachEvent 中this 是window
+
+    // addEventListener 处理函数执行顺序 按照绑定顺序执行
+    // attachEvent 处理函数执行顺序 不按照绑定顺序执行 倒序/乱序
+
+    // addEventListener 同一个事件行为 重复多次绑定 同一个处理函数 只执行一次
+    // attachEvent 同一个事件行为  重复多次绑定 同一个处理函数 绑定多少个就执行多少次
+
+
+    var btn = document.getElementById('btn');
+    //    function fn() {
+    //        console.log('点击');
+    //    }
+    btn.addEventListener('click', fn1, false);
+    btn.addEventListener('click', fn2, false);
+    btn.addEventListener('click', fn3, false);
+    btn.addEventListener('click', fn4, false);
+    btn.addEventListener('click', fn5, false);
+    btn.addEventListener('click', fn5, false);
+    btn.addEventListener('click', fn5, false);
+
+    //    btn.attachEvent('onclick', fn1);
+    //    btn.attachEvent('onclick', fn2);
+    //    btn.attachEvent('onclick', fn3);
+    //    btn.attachEvent('onclick', fn6);
+    //    btn.attachEvent('onclick', fn6);
+    //    btn.attachEvent('onclick', fn6);
+    //    btn.onclick = fn2;
+
+    function fn1() {
+        console.log('fn1');
+//        console.log(this); // btn
+    }
+    function fn2() {
+        console.log('fn2');
+//        console.log(this); // btn
+    }
+    function fn3() {
+        console.log('fn3');
+//        console.log(this); // btn
+    }
+
+    function fn4() {
+        console.log('fn4');
+//        console.log(this); // btn
+    }
+    function fn5() {
+        console.log('fn5');
+//        console.log(this); // btn
+    }
+    function fn6() {
+        console.log('fn6');
+//        console.log(this); // btn
+    }
+
+    //    setTimeout(function () {
+    //        // 不能移除匿名函数 只能移除addEventListener绑定的事件
+    ////        btn.removeEventListener('click', fn2);
+    //        btn.onclick = null;
+    //    }, 3000);
+
+    //    ie 低版本 6 - 8 只有冒泡阶段  attachEvent添加事件/detachEvent移除事件
+    //    btn.attachEvent('onclick',fe);
+    //    setTimeout(function () {
+    //        btn.detachEvent('onclick',fe);
+    //    },3000);
+    //    function fe() {
+    //        console.log('bind');
+    //        console.log(this === window);
+    //    }
+
+    //  bind 同一个事件类型 需要绑定多个处理函数（事件类型需要一个容器 按绑定顺序存放 处理函数 并且将 处理函数里的this 修改为当前绑定事件元素）
+    //  执行  根据事件类型 找到 相应的 处理函数的容器 然后 然后依次 取出 按顺序执行
+
+    // unbind 移除事件 根据事件类型 移除相应的 处理函数
+    //  unbind(ele,'click',fn)
+
+    //    function bind(curEle,type,fn) {
+    //        if(window.addEventListener) {
+    //            curEle.addEventListener(type, fn,false);
+    //        } else {
+    //            curEle.attachEvent('on' + type, fn);
+    //        }
+    //    }
+    //    bind(btn, 'click', fe);
+</script>
+</body>
+</html>

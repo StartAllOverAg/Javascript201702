@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #drag {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100px;
+            height: 100px;
+            background: red;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div id="drag"></div>
+<script type="text/javascript">
+    // 拖拽
+    // 1.按下鼠标不松 mousedown
+    // 鼠标按下后 再绑定  mousemove  mouseup 事件
+    // 2.上下左右移动 mousemove 在里面 改变 拖拽元素left和top 让元素跟着鼠标移动
+    // 3.松开鼠标时 拖拽结束 mouseup  移除mousemove mouseup事件 就拖拽结束  mousemove= null mouseup= null
+    //鼠标抬起 时候 拖拽结束 移除 mousemove= null mouseup= null
+   // 绑定事件
+    var drag = document.getElementById('drag');
+    // 首先绑定个 鼠标按下事件
+    drag.onmousedown = function (e) {
+        e = e || window.event;
+        // 鼠标按下的位置 距离 元素左边的距离 和 距离 元素上边的距离
+        this.l = e.clientX - this.offsetLeft;
+        this.t = e.clientY - this.offsetTop;
+           this.onmousemove = function (e) {
+               // 计算拖拽元素的 left 和 top 值
+               e = e || window.event;
+               e.preventDefault? e.preventDefault() : e.returnValue = false;
+               // 此时的left值
+               this.style.left = e.clientX - this.l + 'px';
+               // 此时的top值
+               this.style.top = e.clientY - this.t + 'px';
+           };
+           this.onmouseup = function () {
+               this.onmousemove = null;
+               this.onmouseup = null;
+           }
+    }
+</script>
+</body>
+</html>

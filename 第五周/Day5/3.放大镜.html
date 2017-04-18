@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #box1, #box2 {
+            position: relative;
+            float: left;
+            width: 350px;
+            height: 350px;
+            border: 1px solid red;
+            margin: 20px;
+            overflow: hidden;
+        }
+        img {
+            -webkit-user-select: none;
+        }
+        #box2 img {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 700px;
+            height: 700px;
+        }
+
+        #box1 #mask {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 175px;
+            height: 175px;
+            background: rgba(0, 0, 0, .3);
+
+        }
+        #box1 {
+            cursor: move;
+        }
+        #box2 {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div id="box1">
+    <img src="./img/iphone.jpg" alt="iphone">
+    <!--<div id="mask"></div>-->
+</div>
+<div id="box2">
+    <img src="./img/iphone_big.jpg" alt="">
+</div>
+<script type="text/javascript">
+    var box1 = document.getElementById('box1');
+    var box2 = document.getElementById('box2');
+    var box2Img = box2.getElementsByTagName('img')[0];
+    var mask;
+    var box1L = box1.offsetLeft + box1.clientLeft;
+    var box1T = box1.offsetTop + box1.clientTop;
+    box1.onmouseenter = function (e) {
+        e = e || window.event;
+        mask = document.getElementById('mask');
+        if (!mask) { // 如果没有mask 就创建
+//            console.log('创建');
+            mask = document.createElement('div');
+            mask.id = 'mask';
+            this.appendChild(mask);
+            // 鼠标划入 box1 的时候 也计算一次 mask 在 box1里的位置
+            computed.call(this,e); // this -> box1
+
+        } else  {
+           mask.style.display = 'block';
+        }
+        box2.style.display = 'block';
+
+    };
+    // 鼠标移动的时候 鼠标的clientX 和 clientY 在不断的改变 那么我想要 mask 鼠标跟随 同时 移动的时候 也要 实时 根据此时的  鼠标的clientX 和 clientY 计算出 此时的mask 的left 和 top
+    box1.onmousemove = function (e) {
+        e = e || window.event;
+        if (mask) { // 鼠标在box1里移动的时候 实时计算mask的位置
+            computed.call(this,e); // this -> box1
+        }
+
+    };
+    box1.onmouseleave = function () {
+        if(mask) { // 鼠标离开时 如果 存在mask 就隐藏
+            mask.style.display = 'none';
+        }
+        box2.style.display = 'none';
+    };
+
+    // 计算 mask 在 box1里面的left 和 top 值
+    function computed(e) {
+        // 根据鼠标位置 clientX 和clientY 计算出 mask在 box1里面的left和top值
+        // 边界判断 在 box1里 mask的  l 最大left值 t 最大top值
+        var l = e.clientX - box1L - mask.offsetWidth / 2;
+        var t = e.clientY - box1T - mask.offsetHeight / 2;
+        var maxL = this.clientWidth - mask.offsetWidth;
+        var maxT = this.clientHeight - mask.offsetHeight;
+        if(l > maxL) {
+            l = maxL;
+        } else if(l < 0) {
+            l = 0;
+        }
+        if(t > maxT) {
+            t = maxT
+        } else if (t < 0) {
+            t = 0;
+        }
+        mask.style.left = l + 'px';
+        mask.style.top = t + 'px';
+        box2Img.style.left = -l * 2 + 'px';
+        box2Img.style.top = -t * 2 + 'px';
+    }
+</script>
+</body>
+</html>

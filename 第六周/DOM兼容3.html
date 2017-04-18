@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<button id="btn">点击</button>
+<script type="text/javascript">
+    // DOM2: addEventListener/removeEventListener
+    //  IE : attachEvent/detachEvent
+    var btn = document.getElementById('btn');
+    // this addEventListener 中this 当前元素  attachEvent中window
+    // attachEvent 重复绑定问题
+    // attachEvent 执行顺序问题
+
+    // 处理绑定兼容
+    function on(ele, type, handler) {
+        if (ele.addEventListener) {
+            ele.addEventListener(type, handler);
+        } else {
+            if (!ele['onEvent' + type]) { // 如果当前事件行为 没有事件池 我们就创建
+                ele['onEvent' + type] = []; // 自定义事件池存储处理函数 一个 每一个事件行为都有一个 事件池
+            }
+            var events = ele['onEvent' + type]; // 根据事件类型 得到 对应的事件池
+            if(events && events.length) { // [Fn,Fn,Fn]
+                for(var i = 0; i < events.length; i++){
+                    // 如果当前事件池中 Fn的events属性 等于 此时要绑定的handler说明之前已经绑定过了 就不需要 在此 多次重复绑定同一个handler(处理函数)
+                    if(events[i].events === handler){ // 防止多次重复绑定同一个处理函数
+                         return;
+                    }
+                }
+            }
+
+            // Fn是为了 解决handler中 this 问题 而产生的
+            function Fn() {
+                handler.call(ele);
+            }
+
+            ele.attachEvent('on' + type,  Fn);
+            Fn.events = handler; // 在绑定Fn 中的 events属性中保存 处理handler
+            events.push(Fn);
+        }
+    }
+
+    //     移除事件 我们实际要移除的是 传递进来的handler 对应Fn
+    function off(ele, type, handler) {
+        if (ele.removeEventListener) {
+            ele.removeEventListener(type, handler);
+        } else {
+            var events = ele['onEvent' + type]; // ele['onEventclick'] 的到的是点击事件池
+            if (events && events.length) {
+                for (var i = 0; i < events.length; i++) { // [Fn,Fn]
+                    if (events[i].events === handler) {
+                        ele.detachEvent('on' + type, events[i]);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    on(btn, 'click', fn1);
+    on(btn, 'click', fn2);
+    on(btn, 'click', fn3);
+//    btn['onEventclick'] = [Fn,Fn,Fn]; // 1.Fn.events = fn1 2.Fn.events = fn2 2.Fn.events = fn3
+//    off(btn, 'click', fn1); // 要移除的是 这个fn1对应的 Fn
+    function fn1() {
+        console.log(this === btn);
+        console.log('fn1');
+    }
+    function fn2() {
+//        console.log(this === window);
+        console.log(this === btn);
+        console.log('fn2');
+    }
+    function fn3() {
+//        console.log(this === window);
+        console.log(this === btn);
+        console.log('fn3');
+    }
+</script>
+</body>
+</html>

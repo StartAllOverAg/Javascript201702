@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #box {
+            position: absolute;
+            left:0;
+            top:0;
+            width:100px;
+            height:100px;
+            background-color: orange;
+        }
+    </style>
+</head>
+<body>
+<div id="box"></div>
+
+<script>
+    var box = document.getElementById('box');
+    var winW = document.documentElement.clientWidth || document.body.clientWidth;
+    var winH = document.documentElement.clientHeight || document.body.clientHeight;
+    box.onmousedown = function (e) {
+        e = e || window.event;
+        var l = e.clientX - this.offsetLeft;
+        var t = e.clientY - this.offsetTop;
+        var maxL = winW - this.offsetWidth;
+        var maxT = winH - this.offsetHeight;
+        if (this.setCapture) {
+            this.setCapture();
+            box.onmousemove = function (e) {
+                e = e || window.event;
+                var boxL = e.clientX - l;
+                var boxT = e.clientY - t;
+                if (boxL > maxL) {
+                    boxL = maxL;
+                }else if (boxL < 0) {
+                    boxL = 0;
+                }
+                if (boxT > maxT) {
+                    boxT = maxT;
+                }else if (boxT < 0) {
+                    boxT = 0;
+                }
+                this.style.left = boxL + 'px';
+                this.style.top = boxT + 'px';
+            };
+
+            box.onmouseup = function () {
+                this.onmousemove = null;
+                this.onmouseup = null;
+                if (this.releaseCapture) {
+                    this.releaseCapture();
+                }
+        }
+        }else {
+            document.onmousemove = function (e) {
+                e = e || window.event;
+                var boxL = e.clientX - l;
+                var boxT = e.clientY - t;
+                if (boxL > maxL) {
+                    boxL = maxL;
+                }else if (boxL < 0) {
+                    boxL = 0;
+                }
+                if (boxT > maxT) {
+                    boxT = maxT;
+                }else if (boxT < 0) {
+                    boxT = 0;
+                }
+                box.style.left = boxL + 'px';
+                box.style.top = boxT + 'px';
+            };
+            document.onmouseup = function () {
+                this.onmousemove = null;
+                this.onmouseup = null;
+            }
+        }
+    }
+</script>
+</body>
+</html>

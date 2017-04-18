@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #mask {
+            /*display: none;*/
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 175px;
+            height: 175px;
+            background: rgba(0, 0, 0, .3);
+            cursor: move;
+
+        }
+
+        #outer {
+            -webkit-user-select: none;
+            position: relative;
+            width: 350px;
+            height: 350px;
+            border: 1px solid red;
+            margin: 20px auto;
+            background: red;
+        }
+
+        #outer img {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+<div id="outer">
+    <!--<div id="mask"></div>-->
+    <img src="./img/iphone.jpg" alt="">
+</div>
+
+<script type="text/javascript">
+    //  鼠标跟随：元素跟着鼠标移动（移动的时候mousemove 实时计算 元素的位置left 和 top）
+    var outer = document.getElementById('outer');
+    var outerL = outer.offsetLeft + outer.clientLeft;
+    var outerT = outer.offsetTop + outer.clientTop;
+    // 滑入的时候 创建 遮罩层
+    outer.onmouseenter = function (e) {
+        e = e || window.event;
+        var mask = document.getElementById('mask');
+        if (!mask) {
+            mask = document.createElement('div');
+            mask.id = 'mask';
+            this.appendChild(mask);
+        }
+        computed.call(this, e,mask);
+    };
+
+
+    outer.onmousemove = function (e) {
+        var mask = document.getElementById('mask');
+        e = e || window.event;
+        computed.call(this, e, mask)
+
+    };
+
+    outer.onmouseleave = function () {
+        var mask = document.getElementById('mask');
+        if(mask) {
+            this.removeChild(mask);
+        }
+    };
+    function computed(e,mask) {
+        var boxL = e.clientX - outerL - mask.offsetWidth / 2;
+        var boxT = e.clientY - outerT - mask.offsetHeight / 2;
+
+//        边界判断 最大left  最大top
+        var maxL = this.clientWidth - mask.offsetWidth;
+        var maxT = this.clientHeight - mask.offsetHeight;
+        if (boxL > maxL) {
+            boxL = maxL;
+        } else if (boxL < 0) {
+            boxL = 0;
+        }
+
+        if (boxT > maxT) {
+            boxT = maxT;
+        } else if (boxT < 0) {
+            boxT = 0;
+        }
+        mask.style.left = boxL + 'px';
+        mask.style.top = boxT + 'px';
+    }
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            margin:0;
+            padding:0
+        }
+        .drag{
+            width:100px;
+            height: 100px;
+            background: red;
+            position: absolute;
+            left:0;
+            top:0;
+        }
+    </style>
+</head>
+<body>
+<div class="drag" id="drag"></div>
+<script>
+    var drag=document.getElementsByClassName('drag')[0];
+    drag.onmousedown=function (e) {
+        e=e||window.event;
+        e.preventDefault?e.preventDefault():e.returnValue=false;
+        //当按下鼠标的时候，记录当前的鼠标距离当前移动元素的left,top位置；
+        var left=e.clientX-this.offsetLeft;
+        var top=e.clientY-this.offsetTop;
+        if(this.setCapture){
+            this.onmousemove=function (e) {
+                e=e||window.event;
+                e.preventDefault?e.preventDefault():e.returnValue=false;
+                this.style.left=e.clientX-left+'px';
+                this.style.top=e.clientY-top+'px'
+                //注意焦dian和鼠标绑定；兼容IE和ff浏览器；
+            }
+        }else{//谷歌
+            document.onmousemove=function (e) {
+                e=e||window.event;
+                e.preventDefault?e.preventDefault():e.returnValue=false;
+                drag.style.left=e.clientX-left+'px';
+                drag.style.top=e.clientY-top+'px';
+
+            }
+
+
+        };
+        drag.onmouseup=function (e) {
+            e=e||window.event;
+            e.preventDefault?e.preventDefault():e.returnValue=false;
+            if(this.setCapture){
+             this.onmousemove=null;
+             this.onmouseup=null;
+            }else{
+                document.onmousemove=null;
+                document.onmouseup=null;
+            }
+
+        };
+
+
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,19 @@
+搜索查询url: 'https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su',
+                    type: 'get',
+                    data: {
+                        wd: ‘周杰伦’,
+                        json: 1
+                    },
+
+跨域
+http 协议（https/http/ftp）  域名  端口
+三者 只要有一个不同 就是跨域
+
+页面url：http://localhost:63342/WEB2017Js/Javascript201702/%E7%AC%AC%E4%BA%94%E5%91%A8/Day5/%E7%99%BE%E5%BA%A6%E6%90%9C%E7%B4%A0.html?_ijt=pe1agih86edr6jb4sf1lhd09rb
+
+请求url：https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su
+
+
+  // 百度搜索页面跳转链接
+       var word =  '关键词';
+      'https://www.baidu.com/s?&rsv_spt=1&wd='+ word;

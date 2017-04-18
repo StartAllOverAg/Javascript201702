@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #outer {
+            width: 300px;
+            height: 300px;
+            padding: 50px;
+            background: red;
+            margin: 20px auto;
+            box-sizing: border-box;
+        }
+
+        #inner {
+            width: 200px;
+            height: 200px;
+            background: blue;
+            padding: 50px;
+            box-sizing: border-box;
+        }
+
+        #center {
+            width: 100px;
+            height: 100px;
+            background: green;
+        }
+    </style>
+</head>
+<body>
+<button id="btn">点击</button>
+<div id="outer">
+    <div id="inner">
+        <div id="center"></div>
+    </div>
+</div>
+<script type="text/javascript">
+    var btn = document.getElementById('btn');
+    //    DOM0级事件绑定 -> 元素对象上私有属性
+    //    DOM2级事件绑定 ->  在元素对象 原型链上EventTarget的属性 上
+    //      addEventListener/ removeEventListener
+    //    btn.onclick = function () {
+    //        console.log('btn1');
+    //    };
+    //    console.dir(btn);
+    /**
+     * param1 事件类型
+     * param2 处理函数
+     * param3 Boolean  true  捕获阶段  false 冒泡阶段
+     */
+        //    btn.addEventListener('click', function () {
+        //           console.log('btn2');
+        //    },false);
+
+        // jq on 底层 调用 封装addEventListener/attachEvent DOM2级事件绑定
+        // jq bind 里面封装 底层调用 on
+
+        // DOM0级事件绑定和DOM2级事件绑定 区别
+        //    1.DOM0事件绑定中 一个元素 同一个事件行为 绑定多个 处理函数，最后面的 处理函数 会将前面覆盖掉（因为DOM0绑定的是私有属性） （DOM0级中不能给一个元素同一个事件行为绑定多个处理函数）
+        //        DOM2级事件绑定中 一个元素 同一个事件行为 可以绑定多个 处理函数 执行顺序是按照绑定顺序执行 (事件任务队列)
+        // DOM0
+        //          btn.onclick = function () {
+        //              console.log('btn1');
+        //          };
+        //          btn.onclick = function () {
+        //            console.log('btn3333');
+        //          };
+
+        // DOM2  将绑定的 处理函数 放到 事件池中
+        //    btn.addEventListener('click', function () {
+        //         console.log('btn1');
+        //    }, false);
+        //    btn.addEventListener('click', function () {
+        //        console.log('btn2');
+        //    }, false);
+        //
+        //   2. DOM0级事件绑定中 事件传播机制 只有 冒泡阶段 DOM2级事件绑定中 可以通过 addEventListener 的第三个参数 指定 true 捕获阶段 false 冒泡阶段
+//    事件传播  先捕获 目标阶段 再冒泡 分为
+//    捕获阶段：从外向内
+//    目标阶段： 执行到目标元素时 停止捕获 执行完目标阶段后 再冒泡
+//    目标阶段中 目标元素 不管是绑定捕获阶段还是冒泡阶段 先绑定谁 谁就先执行
+//    冒泡阶段： 从内向外 -> 当前目标元素 相关行为触发 他的所有上级元素 的相关行为也会触发 一直到document（一些浏览器 一直到window）
+
+
+    var outer = document.getElementById('outer');
+    var inner = document.getElementById('inner');
+    var center = document.getElementById('center');
+
+    // DOM0 级事件绑定  事件传播中只有 冒泡阶段
+    //    outer.onclick = function () {
+    //       console.log('outer 冒泡阶段');
+    //    };
+    //    inner.onclick = function () {
+    //        console.log('inner 冒泡阶段');
+    //    };
+    //    center.onclick = function () {
+    //        console.log('center 冒泡阶段');
+    //    };
+
+    // DOM2 级事件
+    //    outer.addEventListener('click', function () {
+    //        console.log('outer 冒泡阶段');
+    //    }, false);
+    //
+    //
+    //    outer.addEventListener('click', function () {
+    //        console.log('outer 捕获阶段');
+    //    }, true);
+    //
+    //    inner.addEventListener('click', function () {
+    //        console.log('inner 捕获阶段');
+    //    }, true);
+    //    inner.addEventListener('click', function () {
+    //        console.log('inner 冒泡阶段');
+    //    }, false);
+    //
+    //    center.addEventListener('click', function () {
+    //        console.log('center 捕获阶段');
+    //    }, true);
+    //    center.addEventListener('click', function () {
+    //        console.log('center 冒泡阶段');
+    //    }, false);
+
+    //    3. DOM2中提供了一些新的方法 DOMContentLoaded/ jq-ready(HTML结构加载完后执行 )
+    //     window.onload  是页面中 html结构和 所有 图片 文字 资源加载完毕后才执行
+    window.onload = function () {
+        console.log('onload11111111');
+    };
+    window.onload = function () {
+        console.log('onload222222');
+    };
+    document.addEventListener('DOMContentLoaded', function () {
+        console.log('DOMContentLoaded11111');
+    });
+    document.addEventListener('DOMContentLoaded', function () {
+        console.log('DOMContentLoaded2222222');
+    })
+
+</script>
+</body>
+</html>

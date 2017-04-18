@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #drag {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100px;
+            height: 100px;
+            background: red;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div id="drag"></div>
+<script type="text/javascript">
+
+    var drag = document.getElementById('drag');
+    // 获取元素的 所占宽度 和 高度
+    var dragW = drag.offsetWidth;
+    var dragH = drag.offsetHeight;
+    drag.onmousedown = function (e) {
+        // 获取当前窗口的宽度和高度
+        var winW = document.documentElement.clientWidth || document.body.clientWidth;
+        var winH = document.documentElement.clientHeight || document.body.clientHeight;
+        // 最大活动范围
+        this.maxL = winW - dragW;
+        this.maxT = winH - dragH;
+        // 最小活动范围 left和top最小只能为0
+//        this.minL = 0;
+//        this.minT = 0;
+        var boxL;
+        var boxT;
+
+        e = e || window.event;
+        this.l = e.clientX - this.offsetLeft;
+        this.t = e.clientY - this.offsetTop;
+        // 解决ie 和火狐中的 鼠标焦点丢失
+        if (this.setCapture) { // 如果存在这个属性方法 我们就 使用它
+            this.setCapture();
+            this.onmousemove = function (e) {
+                // 计算拖拽元素的 left 和 top 值
+                e = e || window.event;
+                e.preventDefault ? e.preventDefault() : e.returnValue = false;         // 计算出来的 left 和 top
+                boxL = e.clientX - this.l;
+                boxT = e.clientY - this.t;
+                // left值的边界判断
+                if(boxL > this.maxL){
+                    boxL = this.maxL;
+                } else if(boxL < 0){
+                    boxL = 0
+                }
+                // top值的边界判断
+                if(boxT > this.maxT){
+                    boxT = this.maxT;
+                } else if (boxT < 0) {
+                    boxT = 0;
+                }
+                // 边界判断后 在设为 元素的left和top
+                this.style.left = boxL + 'px';
+                this.style.top =  boxT + 'px';
+            };
+            this.onmouseup = function () {
+                this.onmousemove = null;
+                this.onmouseup = null;
+                // 解除鼠标绑定
+                if (this.releaseCapture) {
+                    this.releaseCapture();
+                }
+            }
+        } else { // chrome 将事件绑定给documnet 来解决鼠标焦点丢失问题
+            document.onmousemove = function (e) {
+                e = e || window.event;
+                e.preventDefault? e.preventDefault() : e.returnValue = false;
+                boxL = e.clientX - drag.l;
+                boxT =  e.clientY - drag.t;
+                // 设置前边界判断
+                if(boxL > drag.maxL) {
+                    boxL = drag.maxL;
+                } else if (boxL < 0) {
+                    boxL = 0;
+                }
+                if(boxT > drag.maxT) {
+                    boxT = drag.maxT;
+                } else if(boxT < 0){
+                    boxT = 0;
+                }
+                // 边界判断处理后 在设置为 元素的left和top
+                drag.style.left =  boxL + 'px';
+                drag.style.top = boxT + 'px';
+            };
+            document.onmouseup = function () {
+                document.onmousemove = null;
+                document.onmouseup = null;
+            }
+        }
+    }
+</script>
+</body>
+</html>

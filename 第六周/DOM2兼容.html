@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<button id="btn">点击</button>
+<script type="text/javascript">
+    // DOM2: addEventListener/removeEventListener
+    //  IE : attachEvent/detachEvent
+    var btn = document.getElementById('btn');
+    //    btn.addEventListener('click', function () {
+    //
+    //    }, false);
+    //
+    //    // 兼容IE low
+    //    btn.attachEvent('onclick', function () {
+    //
+    //    });
+
+    //    function bind(ele, type, handler) {
+    //        if(ele.addEventListener) {
+    //            ele.addEventListener(type, handler, false);
+    //        } else {
+    //            ele.attachEvent('on' + type, handler);
+    //        }
+    //    }
+    //    bind(btn, 'click',fn1);
+    //    bind(btn, 'click',fn2);
+    //    bind(btn, 'click',fn3);
+
+    // this addEventListener 中this 当前元素  attachEvent中window
+    // attachEvent 重复绑定问题
+    // attachEvent 执行顺序问题
+
+
+    //    btn.addEventListener('click', fn1, true);
+    //    btn.addEventListener('click', fn1, false);
+    // 移除时要保证三者一致 事件行为 处理函数 阶段
+    //    btn.removeEventListener('click', fn1, false);
+
+    function fn1() {
+//        console.log(this === window);
+        console.log('fn1');
+    }
+    function fn2() {
+//        console.log(this === window);
+        console.log('fn2');
+    }
+    function fn3() {
+//        console.log(this === window);
+        console.log('fn3');
+    }
+</script>
+</body>
+</html>

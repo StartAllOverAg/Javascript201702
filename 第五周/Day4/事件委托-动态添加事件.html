@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<ul id="lists">
+    <li>111</li>
+    <li>222</li>
+    <li>333</li>
+</ul>
+<script type="text/javascript">
+    var lists = document.getElementById('lists');
+    var lis = lists.getElementsByTagName('li');
+   // 利用事件委托机制 解决后代 动态添加元素的 相关事件行为
+    lists.onclick = function (e) {
+        e = e || window.event;
+        var tar = e.target;
+        if(tar.tagName.toUpperCase() === 'LI') {
+            console.log(tar.innerHTML);
+        }
+    };
+//    for(var i = 0; i < lis.length; i++){
+//        lis[i].onclick = function () {
+//          console.log(this.innerHTML);
+//        };
+//    }
+
+    setTimeout(function () {
+        for(var j = 4; j < 7; j++){
+            var oLi = document.createElement('li');
+            oLi.innerHTML = (j +'').repeat(3);
+            lists.appendChild(oLi);
+        }
+    },2000);
+
+</script>
+</body>
+</html>

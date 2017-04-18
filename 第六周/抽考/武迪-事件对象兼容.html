@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #drag{
+           width: 100px;
+            height: 100px;
+            background-color: #C4C4C4;
+        }
+    </style>
+</head>
+<body>
+<div id="drag"></div>
+<script type="text/javascript">
+    var drag=document.getElementById("drag");
+    drag.onclick= function (e) {
+        e=e||window.event;
+        e.target=e.target||e.srcElement;
+        e.preventDefault?e.preventDefault():e.returnValue=false;
+        e.stopPropagation?e.stopPropagation():e.cancelBubble=true;
+        var pagex=e.clientX+(document.documentElement.scrollLeft||document.body.scrollLeft);
+        var pagey=e.clientY+(document.documentElement.scrollTop||document.body.scrollTop);
+        e.pageX=e.pageX||pagex;
+        e.pageY=e.pageY||pagey;
+        console.log(pagey,e.pageY);
+    }
+
+</script>
+</body>
+</html>

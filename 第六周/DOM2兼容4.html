@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<button id="btn">点击</button>
+<script type="text/javascript">
+    // DOM2: addEventListener/removeEventListener
+    //  IE : attachEvent/detachEvent
+    var btn = document.getElementById('btn');
+ // on的目的 给每个事件类型 创建一个 事件池 将要绑定给这个事件类型的处理函数 按照绑定顺序 添加到 对应的事件池中
+ // run 方法 将对应的事件类型的 事件池的到 循环遍历事件池 让里面处理函数 依次按顺序执行 并且改变里面this 为当前元素
+  // 我们间接将run方法绑定给 我们元素
+
+    // 处理绑定兼容
+    function on(ele, type, handler) {
+        if (ele.addEventListener) {
+            ele.addEventListener(type, handler);
+        } else {
+            // 绑定前 进行处理
+            if(!ele['onEvent' + type]) { // 事件池：存储当前事件行为 绑定的处理函数
+                ele['onEvent' + type] = []; // [fn1.fn2,fn3]
+                ele.attachEvent('on' +　type, function (e) {
+                    run.call(ele,e); // run控制 事件池里 处理函数的执行
+                });
+            }
+            var events = ele['onEvent' + type];
+            if(events&&events.length) {
+                for(var i = 0; i < events.length; i++){
+                    if(events[i] === handler) { // 防止事件池中 添加重复的处理函数handler
+                        return;
+                    }
+                }
+            }
+            events.push(handler); // [fn1.fn2,fn3] 在相应的是事件池里 保存 要绑定一个或多个 处理函数
+        }
+    }
+
+    //  移除事件
+    function off(ele, type, handler) {
+        if (ele.removeEventListener) {
+            ele.removeEventListener(type, handler);
+        } else {
+            var events = ele['onEvent'+type]; // 得到 元素对应事件类型的事件池i
+            if(events && events.length) {
+                for(var i = 0; i < events.length; i++) {
+                    if(events[i] === handler) {
+                        events.splice(i, 1);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+   // 处理函数的执行顺序 取决于 在事件池的中位置顺序 执行哪些处理函数 就对象事件类型的事件池中 有哪些处理函数
+    function run(e) { // 执行 并且 控制执行顺序
+//        e.type 事件类型
+        var type = e.type;
+        var events = this['onEvent' + type]; // [fn1.fn2,fn3]
+        if(events&&events.length){
+            for(var i = 0; i < events.length; i++){
+                events[i].call(this,e);
+            }
+        }
+
+    }
+    on(btn, 'click', fn1);
+    on(btn, 'click', fn1);
+    on(btn, 'click', fn1);
+    on(btn, 'click', fn2);
+    on(btn, 'click', fn3);
+    off(btn, 'click', fn2);
+
+    function fn1() {
+        console.log(this === btn);
+        console.log('fn1');
+    }
+    function fn2() {
+        console.log(this === btn);
+        console.log('fn2');
+    }
+    function fn3() {
+
+        console.log(this === btn);
+        console.log('fn3');
+    }
+
+
+//    var  arrFn = [fn1,fn2,fn3];
+
+//    function run2(e) {
+////        this === btn
+//        for(var i = 0; i<arrFn.length; i++){
+//            arrFn[i].call(this,e);
+//        }
+//    }
+//    run2();
+//    btn.onclick = function (e) {
+//        run2.call(this, e)
+//    }
+</script>
+</body>
+</html>

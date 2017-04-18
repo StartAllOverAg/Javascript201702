@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #search {
+            display: inline-block;
+            width: 300px;
+            height: 30px;
+            padding-left: 10px;
+        }
+        #search-btn {
+             width: 100px;
+             height: 36px;
+         }
+        #outer {
+            width: 480px;
+            margin: 20px auto;
+        }
+        ul {
+            list-style: none;
+        }
+        ul.lists {
+            display: none;
+            width: 412px;
+            border: 1px solid #ccc;
+            border-top: none;
+        }
+        ul.lists li {
+            padding-left: 10px;
+            height: 30px;
+            line-height: 30px;
+
+        }
+        ul.lists li.select {
+            background-color: #C4C4C4;
+        }
+    </style>
+</head>
+<body>
+<div id="outer">
+<input id="search" type="text"><button id="search-btn">百度一下</button>
+    <ul class="lists"></ul>
+</div>
+<script type="text/javascript" src="./jquery-1.11.3.js"></script>
+<script type="text/javascript">
+    $(function () {
+       $('#search').on('input', function () {
+           var val = $(this).val();
+            if(val) {
+                $(this).data('word',val); // 保存输入框最开始的数据
+                $.ajax({
+                    // 百度搜索关键词 请求 接口API
+                    url: 'https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su',
+                    type: 'get',
+                    data: { // 向后台发送数据
+                        wd: val, // 查询关键词
+                        json: 1
+                    },
+                    dataType: 'jsonp', // 跨域请求
+                    jsonp: 'cb', // 指定函数名 cb(result)
+                    success: function (result) {
+                        if(result.g){
+                            bindData(result.g)
+                        }
+                    }
+                })
+            } else {
+                $('.lists').hide();
+            }
+       });
+        function bindData(data) {
+          var str = '';
+          $.each(data, function () {
+              str += '<li>'+this.q +'</li>';
+//              console.log(this);
+          });
+          $('.lists').html(str).show();
+        }
+        var count = -1;
+        $('#search').on('keydown', function (e) {
+            if(e.keyCode === 38){ // 上
+                     count --;
+                     if(count <= -2) {
+                         count =  $('.lists li:last').index();
+                         $('.lists li:last').addClass('select');
+                     } else if(count === -1){
+                         $('.select').removeClass('select');
+                         var word = $(this).data('word');
+                         $(this).val(word); // 输入框中设置为最开始输入时的关键词
+                         return;
+                     } else {
+                         $('.lists li').eq(count).addClass('select').siblings().removeClass('select');
+                     }
+
+                $(this).val($('.lists li').eq(count).html());
+
+            } else if(e.keyCode === 40) { //下
+                count++;
+                if(count > $('.lists li:last').index()) {
+                     count = -1;
+                    $('.select').removeClass('select');
+                     var word = $(this).data('word');
+                      $(this).val(word); // 输入框中设置为最开始输入时的关键词
+                     return;
+                }
+                $('.lists li').eq(count).addClass('select').siblings().removeClass('select');
+                $(this).val($('.lists li').eq(count).html());
+            } else if(e.keyCode === 13){
+                // 百度跳转链接
+                var url = 'https://www.baidu.com/s?&rsv_spt=1&wd='+$(this).val();
+                window.location.href = url;
+            }
+        })
+    });
+</script>
+</body>
+</html>

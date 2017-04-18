@@ -1,0 +1,6 @@
+添加协作人员
+
+进入 仓库 点击 settings -> collaborators 在里面 添加协作人员（git账户名）-> 点击Add collaborator
+协作人员 会收到 邮件 同意下 即可
+
+注意：每个人员在 git push 之前 一定要 先 git pull 一下 然后再 git push

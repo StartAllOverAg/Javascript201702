@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #drag {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100px;
+            height: 100px;
+            background: red;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div id="drag"></div>
+<script type="text/javascript">
+
+    var drag = document.getElementById('drag');
+    // 获取元素的 所占宽度 和 高度
+    var dragW = drag.offsetWidth;
+    var dragH = drag.offsetHeight;
+    drag.onmousedown = function (e) {
+        // 获取当前窗口的宽度和高度
+        var winW = document.documentElement.clientWidth || document.body.clientWidth;
+        var winH = document.documentElement.clientHeight || document.body.clientHeight;
+        // 最大活动范围
+        this.maxL = winW - dragW;
+        this.maxT = winH - dragH;
+        // 最小活动范围 left和top最小只能为0
+        var boxL;
+        var boxT;
+        e = e || window.event;
+        this.l = e.clientX - this.offsetLeft;
+        this.t = e.clientY - this.offsetTop;
+        // 解决ie 和火狐中的 鼠标焦点丢失
+        if (this.setCapture) { // 如果存在这个属性方法 我们就 使用它
+            this.setCapture();
+            this.onmousemove = move;
+            this.onmouseup = up;
+        } else { // chrome 将事件绑定给documnet 来解决鼠标焦点丢失问题
+            document.onmousemove = function (e) {
+                move.call(drag, e);
+            };
+            document.onmouseup = up;
+        }
+    };
+
+    function up() {
+        // 解除鼠标绑定
+        // 如果当前元素 支持releaseCapture 方法 说明我们是 直接给元素绑定的mousemove和mouseup事件 那么 我们up的时候 要移除的这个元素上的move和up
+        // 如果支持this.releaseCapture  就 解除 鼠标绑定
+        if (this.releaseCapture) { // 在ie和火狐中 up里的this 是 当前元素
+            this.releaseCapture();
+        }
+        // 如果 不支持releaseCapture 说明我们的mousemove和mouseup事件 是绑定个document的  这里面的this -> document 然后我们要移除的 是 document的mousemove 和 mouseup 事件
+        // 不管mouseup里this 是谁 我们都要移除 当前绑定的 mousemove和mouseup事件
+        this.onmousemove = null;
+        this.onmouseup = null;
+    }
+
+    // move执行逻辑单独拿出来
+    function move(e) {
+        // 计算拖拽元素的 left 和 top 值
+        e = e || window.event;
+        e.preventDefault ? e.preventDefault() : e.returnValue = false;         // 计算出来的 left 和 top
+        boxL = e.clientX - this.l;
+        boxT = e.clientY - this.t;
+        // left值的边界判断
+        if (boxL > this.maxL) {
+            boxL = this.maxL;
+        } else if (boxL < 0) {
+            boxL = 0
+        }
+        // top值的边界判断
+        if (boxT > this.maxT) {
+            boxT = this.maxT;
+        } else if (boxT < 0) {
+            boxT = 0;
+        }
+        // 边界判断后 在设为 元素的left和top
+        this.style.left = boxL + 'px';
+        this.style.top = boxT + 'px';
+    }
+
+
+</script>
+</body>
+</html>
