@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        div {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+        }
+        #oDiv1 {
+            left: 0;
+            top: 0;
+            background-color: red;
+        }
+        #oDiv2 {
+            left: 0;
+            top: 100px;
+            background-color: #c080ff;
+        }
+        #oDiv3 {
+            left: 0;
+            top: 200px;
+            background-color: #1ce2ff;
+        }
+        #oDiv4 {
+            left: 0;
+            top: 300px;
+            background-color: #91ff4f;
+        }
+    </style>
+</head>
+<body>
+<div id="oDiv1"></div>
+<div id="oDiv2"></div>
+<div id="oDiv3"></div>
+<div id="oDiv4"></div>
+<script type="text/javascript" src="event_selfSet.js"></script>
+<script type="text/javascript">
+    // 自定义事件 实现动画
+    var oDivs = document.getElementsByTagName('div');
+    //获取一屏的宽、高
+    //获取当前元素的自身的宽高
+    var oDivW = oDivs[0].offsetWidth;
+    var oDivH = oDivs[0].offsetHeight;
+
+    // 将一个独立模块 拆分出来 需要的时候 通过某种途径 衔接在一起
+    for(var i = 0; i < oDivs.length; i++){
+        on(oDivs[i], 'mousedown', down);
+        // 订阅动画  只需要控制订阅谁不订阅
+
+        if( i < 2) {
+            // 订阅 fly动画
+            on(oDivs[i], 'selfFly', fly);
+            // 订阅fly速度
+            on(oDivs[i], 'selfSpeed',getSpeed);
+        } else{
+            // 订阅drop动画
+            on(oDivs[i], 'selfDrop', drop);
+        }
+
+    }
+
+    var zIndex = 0;
+
+        function down(e) { // this = oDiv
+            // 清除上次拖拽的 动画
+            clearTimeout(this.flyTimer);
+            clearTimeout(this.dropTimer);
+            zIndex++;
+            this.style.zIndex = zIndex;
+            //按下的时候获取当前的鼠标点到元素的左边距和上边距
+            this.l = e.clientX - this.offsetLeft;
+            this.t = e.clientY - this.offsetTop;
+            this.winW = document.documentElement.clientWidth || document.body.clientWidth;
+            this.winH = document.documentElement.clientHeight || document.body.clientHeight;
+
+
+            // 通过一不销毁的作用域 将 当前this 保存 私有变量
+//            function handler(fn, context) {  // context = this = oDiv;
+//                return function (e) {
+//                    fn.call(context,e);
+//                }
+//            }
+
+
+            this.MOVE =handler(move, this);
+            this.UP = handler(up, this);
+            on(document,'mousemove', this.MOVE); // 如果不处理 是document
+            on(document,'mouseup', this.UP);  // 如果不处理 是document
+
+        }
+
+    function move(e) {
+        e.preventDefault();
+        //鼠标在移动中实时计算出当前元素的偏移量
+        var boxL = e.clientX -  this.l;
+        var boxT = e.clientY -  this.t;
+        this.maxL =  this.winW - oDivW;
+        this.maxT =  this.winH - oDivH;
+        if (boxL > this.maxL) {
+            boxL = this.maxL;
+        } else if (boxL < 0) {
+            boxL = 0;
+        }
+        if (boxT > this.maxT) {
+            boxT = this.maxT;
+        } else if (boxT < 0) {
+            boxT = 0;
+        }
+        this.style.left = boxL + 'px';
+        this.style.top = boxT + 'px';
+
+//         为了计算up的时候 最后两次之间的步长 速度
+        // 计算每相邻两次位置 之间 移动距离 步长
+//        console.time('timer');
+
+        selfRun(this,'selfSpeed',e);
+//        console.log(this.curSpeed);
+    }
+
+    function up(e) {
+        off(document,'mousemove', this.MOVE); // oDiv.MOVE
+        off(document,'mouseup', this.UP); // oDiv.UP
+        this.prevSpeed = null; // 将上一次拖拽的 起始位置 清空
+//       发布动画
+         selfRun(this,'selfFly',e);
+         selfRun(this,'selfDrop',e);
+    }
+
+    // hanlder执行形成一个不销毁作用域 将传进来的this 当实参 保存到这个 作用域的私有变量context中
+    // 当匿名函数执行时候  遇上了一个私有变量context 去上级context里面查找 在上级找到的context存储的是我们要修改成的 this（当前元素）
+    function handler(fn, context) {
+        return function (e) {
+            fn.call(context,e);
+        }
+    }
+
+    // 执行衰减动画 最后一次的速度 this.curSpeed 衰减
+    function fly() {
+        clearTimeout(this.flyTimer);
+        // 不断的衰减 最后两次的 步长     然后在当前位置上 不断累加 就可以 让元素 不断的移动
+        this.curSpeed *= 0.98; // 衰减步长
+        // 在松手后的位置上 不断累加步长 此时应该到位置
+        var currents = this.offsetLeft + this.curSpeed;
+        if(currents >= this.maxL){
+            currents = this.maxL;
+            this.curSpeed *= -1; // 到达边界 反方向运动
+        } else if(currents <= 0){
+            currents = 0;
+            this.curSpeed *= -1;
+        }
+
+       this.style.left = currents + 'px';
+        // 当此时速度 衰减为 比0.5小 那么我们就不在执行 衰减动画
+        if(Math.abs(this.curSpeed) > 0.5) { // 动画结束条件
+            this.flyTimer = setTimeout(handler(fly,this),25);
+        }
+    }
+
+//    自由落体 动画
+    function drop() {
+         clearTimeout(this.dropTimer);
+        if(this.dropSpeed) {
+           this.dropSpeed += 10;
+        } else {
+            this.dropSpeed = 1; // 设置一个初始的速度
+        }
+        this.dropSpeed *= 0.98; // 衰减
+
+
+        var current = this.dropSpeed + this.offsetTop; // 再原基础上递增步长 此时应该到大的位置
+        // 边界
+        if(current >= this.maxT) {
+            current = this.maxT;
+            this.dropSpeed *= -1; // 到大边界时反方向运动
+            this.flag++; // 捕捉它到大底部
+
+        } else {
+            this.flag = 0;
+        }
+
+        this.style.top = current + 'px';
+        if(this.flag < 2) { // 结束条件 如果flag 大于等于2 说明 此时 元素的动画已经结束了 元素是始终在底部 （始终执行 this.flag++ ）不会在反弹了
+            this.dropTimer = setTimeout(handler(drop,this), 25);
+        }
+    }
+
+    function getSpeed(e) {
+        if(this.prevSpeed) {
+            this.curSpeed = e.clientX - this.prevSpeed;
+            this.prevSpeed = e.clientX;
+        } else {
+            this.prevSpeed = e.clientX;
+        }
+    }
+</script>
+</body>
+</html>;

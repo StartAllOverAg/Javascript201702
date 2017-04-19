@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<button id="btn1">wudi结婚</button>
+<button id="btn2">wudi搬家</button>
+
+<script type="text/javascript">
+    // 发布/订阅  自定义事件
+
+    var btn1 = document.getElementById('btn1');
+    var btn2 = document.getElementById('btn2');
+    btn1.onclick = function () {
+        console.log('wudi结婚');
+        publish(this,'结婚了'); // 发布
+        publish(btn2,'搬家了'); // 发布
+
+    };
+    btn2.onclick = function () {
+        console.log('wudi搬家');
+        publish(this,'搬家了'); // 发布
+
+    };
+
+    // 订阅 约定
+    on(btn1, '结婚了',fn1);
+    on(btn1, '结婚了',fn2);
+    on(btn1, '结婚了',fn3);
+
+
+//    on(btn2, '搬家了',fe1);
+//    on(btn2, '搬家了',fe2);
+//    on(btn2, '搬家了',fe3);
+
+    function on(ele, type, fn) {
+        if(!ele['self' + type]){
+            ele['self' + type] = [];
+        }
+        var events =  ele['self' + type];
+        if(events && events.length) {
+            for(var i = 0; i < events.length; i++){
+               if(events[i] === fn){
+                   return;
+               }
+            }
+        }
+        events.push(fn);
+    }
+    // 发布 通知
+    function publish(ele, type) {
+        var events = ele['self' + type];
+        if(events&&events.length){
+            for(var i = 0; i < events.length; i++){
+                events[i].call(ele);
+            }
+        }
+    }
+
+    // 退订
+    function off(ele, type, fn) {
+        var events = ele['self' + type];
+        if(events&&events.length){
+            for(var i = 0; i < events.length; i++){
+                if(events[i] === fn){
+                    events.splice(i,1);
+                    break;
+                }
+            }
+        }
+    }
+
+    function fn1() {
+        console.log('崔杨该上礼le');
+    }
+    function fn2() {
+        console.log('lyue该上礼le');
+    }
+    function fn3() {
+        console.log('zhenan该上礼le');
+    }
+
+    function fe1() {
+        console.log('jingmiang给你 送钱了')
+    }
+    function fe2() {
+        console.log('二姨夫给你 送钱了')
+    }
+    function fe3() {
+        console.log('七舅姥爷给你 送钱了')
+    }
+</script>
+</body>
+</html>
