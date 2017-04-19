@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #oDiv {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="oDiv"></div>
+<script type="text/javascript" src="event.js"></script>
+<script type="text/javascript">
+    var oDiv = document.getElementById('oDiv');
+    //获取一屏的宽、高
+    //获取当前元素的自身的宽高
+    var oDivW = oDiv.offsetWidth;
+    var oDivH = oDiv.offsetHeight;
+
+    on(oDiv, 'mousedown', down);
+
+        function down(e) { // this = oDiv
+            //按下的时候获取当前的鼠标点到元素的左边距和上边距
+            this.l = e.clientX - this.offsetLeft;
+            this.t = e.clientY - this.offsetTop;
+            this.winW = document.documentElement.clientWidth || document.body.clientWidth;
+            this.winH = document.documentElement.clientHeight || document.body.clientHeight;
+
+
+            // 通过一不销毁的作用域 将 当前this 保存 私有变量
+//            function handler(fn, context) {  // context = this = oDiv;
+//                return function (e) {
+//                    fn.call(context,e);
+//                }
+//            }
+//            down 里面this oDiv
+//            this.MOVE =handler(move, this); // handler(move, oDiv);
+//            this.MOVE = function (e) {
+//                fn.call(this,e);
+//            };
+//            this.Fn = function (e) {
+//                move.call(that,e) // 等于说是 将this.FN里面的this 修改为 move的this
+//            };
+//            var that = this;
+
+            this.MOVE =handler(move, this);
+            this.UP = handler(up, this);
+            on(document,'mousemove', this.MOVE); // 如果不处理 是document
+            on(document,'mouseup', this.UP);  // 如果不处理 是document
+
+        }
+
+    function move(e) {
+        e.preventDefault();
+        //鼠标在移动中实时计算出当前元素的偏移量
+        var boxL = e.clientX -  this.l;
+        var boxT = e.clientY -  this.t;
+        this.maxL =  this.winW - oDivW;
+        this.maxT =  this.winH - oDivH;
+        if (boxL > this.maxL) {
+            boxL = this.maxL;
+        } else if (boxL < 0) {
+            boxL = 0;
+        }
+        if (boxT > this.maxT) {
+            boxT = this.maxT;
+        } else if (boxT < 0) {
+            boxT = 0;
+        }
+        this.style.left = boxL + 'px';
+        this.style.top = boxT + 'px';
+    }
+
+    function up() {
+        off(document,'mousemove', this.MOVE); // oDiv.MOVE
+        off(document,'mouseup', this.UP); // oDiv.UP
+    }
+
+    // hanlder执行形成一个不销毁作用域 将传进来的this 当实参 保存到这个 作用域的私有变量context中
+    // 当匿名函数执行时候  遇上了一个私有变量context 去上级context里面查找 在上级找到的context存储的是我们要修改成的 this（当前元素）
+    function handler(fn, context) {
+        return function (e) {
+            fn.call(context,e);
+        }
+    }
+</script>
+</body>
+</html>;

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<button id="btn">点击</button>
+<script src="./event.js"></script>
+<script type="text/javascript">
+    var btn = document.getElementById('btn');
+    on(btn, 'click', fn1);
+    on(btn, 'click', fn1);
+    on(btn, 'click', fn1);
+//    off(btn,"click",fn1);
+    function fn1(e) {
+        console.log(e.pageX);
+//        console.log(window.event);
+        console.log('fn1');
+    }
+//    btn.attachEvent('onclick', fn1)
+</script>
+</body>
+</html>

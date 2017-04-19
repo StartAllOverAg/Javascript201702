@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<button id="btn">点击</button>
+<script type="text/javascript">
+    // on off run
+
+    var btn = document.getElementById('btn');
+    /**
+     * on DOM2级事件绑定
+     * @param ele 当前元素
+     * @param type 事件类型
+     * @param handler 处理函数
+     */
+
+    function on(ele, type, handler) {
+        if (ele.addEventListener) { // 其他浏览器（除了IE低版本）
+            ele.addEventListener(type, handler, false);
+        } else { // IE 低版本（6-8）
+            ele.attachEvent('on' + type, handler);
+        }
+    }
+    /**
+     * on DOM2级事件移除
+     * @param ele 当前元素
+     * @param type 事件类型
+     * @param handler 处理函数
+     */
+    function off(ele, type, handler) { // 其他浏览器（除了IE低版本）
+        if (ele.removeEventListener) {
+            ele.removeEventListener(type, handler, false);
+        } else { // IE 低版本（6-8）
+            ele.detachEvent('on' + type, handler);
+        }
+    }
+
+
+    on(btn, 'click', fn1);
+    on(btn, 'click', fn2);
+    // attachEvent 绑定的处理函数中的this 是window
+    //    off(btn, 'click', fn1);
+    function fn1() {
+//        console.log(this === window);
+        console.log(this);
+        console.log('fn1');
+    }
+    function fn2() {
+        console.log('fn2');
+    }
+    function fn3() {
+        console.log('fn3');
+    }
+</script>
+</body>
+</html>

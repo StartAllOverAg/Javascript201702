@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<button id="btn">点击</button>
+<script type="text/javascript">
+    // on off run
+
+    var btn = document.getElementById('btn');
+    /**
+     * on DOM2级事件绑定
+     * @param ele 当前元素
+     * @param type 事件类型
+     * @param handler 处理函数
+     */
+
+    function on(ele, type, handler) {
+        if (ele.addEventListener) { // 其他浏览器（除了IE低版本）
+            ele.addEventListener(type, handler, false);
+        } else { // IE 低版本（6-8）
+            // 为每一个事件类型 创建一个 事件池
+            // 事件池命名 前缀'onEvent' + type(事件类型名) =》 'onEventclick'/'onEventmouseover'
+            if(!ele['onEvent' + type]){
+                // ele['onEventclick'] 创建一个 click的事件池
+                // ele['onEventmouseover'] 创建一个 click的事件池
+                ele['onEvent' + type] = []; // 事件池：存储事件类型中 绑定的一个或多个处理函数
+            }
+            var events =  ele['onEvent' + type];
+            // Fn 每一个handler(要绑定的处理函数) 都有一个对应的Fn
+            function Fn(e) { // 预处理
+                handler.call(ele,e);
+            }
+            // 在hanlder外面包装一个层 函数Fn 我们将Fn直接绑定给当前元素 Fn执行的时候 让里面的call执行 将handler里面this修改为 ele 让后 handler执行
+            ele.attachEvent('on' + type, Fn); // 直接绑定的是handler对应的Fn
+            Fn.events  = handler; // 将原本的处理函数 保存在 它对应的Fn的自定属性events中
+            events.push(Fn);
+        }
+    }
+    /**
+     * on DOM2级事件移除
+     * @param ele 当前元素
+     * @param type 事件类型
+     * @param handler 处理函数
+     */
+    function off(ele, type, handler) { // 其他浏览器（除了IE低版本）
+        if (ele.removeEventListener) {
+            ele.removeEventListener(type, handler, false);
+        } else { // IE 低版本（6-8）
+            // 我们要移除时 相应事件类型中 handler处理函数 对应的那个Fn
+//           ele['onEventclick'] click的事件池
+            // 'onEvent' + 'click'  'onEvent' + 'mouseover'
+            var events = ele['onEvent' + type];
+            if(events && events.length) { // events [Fn,Fn,Fn]
+                // 筛选出 handler 对应的Fn 将Fn移除掉
+                for(var i = 0; i < events.length; i++){
+                    // 如果Fn.events 保存的就是 我们要找的handler 我们就将 这个Fn移除掉
+                    if(events[i].events === handler) {
+                        ele.detachEvent('on' + type, events[i]);
+                        events.splice(i,1);
+                    }
+                }
+            }
+
+        }
+    }
+
+
+    on(btn, 'click', fn1);
+    on(btn, 'mouseover', fn1);
+    on(btn, 'click', fn2);
+    on(btn, 'mouseover', fn2);
+    off(btn, 'mouseover', fn1);
+    off(btn, 'click', fn2);
+
+    // attachEvent 绑定的处理函数中的this 是window
+    //    off(btn, 'click', fn1);
+    function fn1() {
+//        console.log(this === window); // false
+        console.log(this === btn); // true
+        console.log('fn1');
+    }
+    function fn2() {
+        console.log('fn2');
+    }
+    function fn3() {
+        console.log('fn3');
+    }
+
+</script>
+</body>
+</html>

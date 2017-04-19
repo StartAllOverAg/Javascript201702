@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<button id="btn">点击</button>
+<script type="text/javascript">
+    // on off run
+
+    var btn = document.getElementById('btn');
+    /**
+     * on DOM2级事件绑定
+     * @param ele 当前元素
+     * @param type 事件类型
+     * @param handler 处理函数
+     */
+
+    function on(ele, type, handler) {
+        if (ele.addEventListener) { // 其他浏览器（除了IE低版本）
+            ele.addEventListener(type, handler, false);
+        } else { // IE 低版本（6-8）
+
+            if(!ele['onEvent' + type]){
+                ele['onEvent' + type] = []; // 事件池：存储事件类型中 绑定的一个或多个处理函数
+            }
+            var events =  ele['onEvent' + type];
+            if(events && events.length) {
+                for(var i = 0; i < events.length; i++) { //[Fn,Fn,Fn]
+                    if(events[i].event === handler) { //如果 在 当类型的事件池用 有此时要绑定的 handler对应的Fn 说明 在和之前 已经绑定过了 不要再重复绑定
+                        return;
+                    }
+                }
+            }
+
+            // Fn 每一个handler(要绑定的处理函数) 都有一个对应的Fn
+            function Fn(e) { // 预处理
+                handler.call(ele,e);
+            }
+
+            ele.attachEvent('on' + type, Fn);
+            Fn.event  = handler;
+            events.push(Fn);
+        }
+    }
+    /**
+     * on DOM2级事件移除
+     * @param ele 当前元素
+     * @param type 事件类型
+     * @param handler 处理函数
+     */
+    function off(ele, type, handler) { // 其他浏览器（除了IE低版本）
+        if (ele.removeEventListener) {
+            ele.removeEventListener(type, handler, false);
+        } else {
+            var events = ele['onEvent' + type];
+            if(events && events.length) { // events [Fn,Fn,Fn]
+                // 筛选出 handler 对应的Fn 将Fn移除掉
+                for(var i = 0; i < events.length; i++){
+                    // 如果Fn.events 保存的就是 我们要找的handler 我们就将 这个Fn移除掉
+                    if(events[i].event === handler) {
+                        ele.detachEvent('on' + type, events[i]);
+                        events.splice(i,1);
+                        break;
+                    }
+                }
+            }
+
+        }
+    }
+
+
+    on(btn, 'click', fn1);
+    on(btn, 'click', fn1);
+    on(btn, 'click', fn1);
+    on(btn, 'click', fn2);
+
+
+
+    // attachEvent 绑定的处理函数中的this 是window
+    function fn1() {
+//        console.log(this === window); // false
+        console.log(this === btn); // true
+        console.log('fn1');
+    }
+    function fn2() {
+        console.log('fn2');
+    }
+    function fn3() {
+        console.log('fn3');
+    }
+
+    btn.onclick = function (e) {
+        fe()
+    }
+</script>
+</body>
+</html>
