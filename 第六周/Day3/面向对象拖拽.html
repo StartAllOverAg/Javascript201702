@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        div {
+            width: 100px;
+            height: 100px;
+            cursor: pointer;
+            position: absolute;
+            left: 0;
+        }
+
+        #oDiv1 {
+            background-color: red;
+            top: 0;
+        }
+
+        #oDiv2 {
+            background-color: #9f7fff;
+            top: 100px;
+        }
+
+        #oDiv3 {
+            background-color: #ff7fce;
+            top: 200px;
+        }
+    </style>
+</head>
+<body>
+<div id="oDiv1"></div>
+<div id="oDiv2"></div>
+<div id="oDiv3"></div>
+<script type="text/javascript" src="event_selfSet.js"></script>
+<script type="text/javascript">
+    var oDiv1 = document.getElementById('oDiv1');
+    var oDiv2 = document.getElementById('oDiv2');
+    var oDiv3 = document.getElementById('oDiv3');
+
+    function Drag(curEle) {
+        this.ele = curEle; // 将当前元素 保存给当前实例的ele属性
+        // 将this.down里面 this修改为 当前实例
+        // down里面将this修改为 当前实例 是为了 能够在down里面通过实例来调用原型上move up handlerThis 方法
+        this.DOWN = this.handlerThis(this.down, this); // 类中this是当前实例
+        on(this.ele, 'mousedown', this.DOWN); // 此时不管将包装后的 this.down绑定给谁 里面 始终 是当前实例
+        // 当前元素 不是 Drag实例 在down方法里需要 使用Drag原型上的属性方法
+//        那么我们 必须保证 down方法里 通过实例 才能找到并调用
+//        on(this.ele,'mousedown',  this.down); // this.down 方法里面 this当前绑定元素
+    }
+
+
+    //    只要在函数里面需要用到 down move up handlerThis computed这些方法
+    //    必须保证这个函数里this 是当前实例 因为这些方法都在Drag这个类的原型上 只有Drag的实例才能调用
+    //
+    //    其他this 都修改为当前元素 this.ele
+    Drag.prototype.down = function (e) {
+        this.ele.l = e.clientX - this.ele.offsetLeft;
+        this.ele.t = e.clientY - this.ele.offsetTop;
+
+        var winW = document.documentElement.clientWidth || document.body.clientWidth;
+        var winH = document.documentElement.clientHeight || document.body.clientHeight;
+        this.ele.maxL = winW - this.ele.offsetWidth;
+        this.ele.maxT = winH - this.ele.offsetHeight;
+        // 在 down 里面 因为 move 和 up 都保存在 Drag这个类的原型 上 只能通过实例.move 和实例.up得到
+        this.ele.MOVE = this.handlerThis(this.move, this);
+        this.ele.UP = this.handlerThis(this.up, this.ele);
+        on(document, 'mousemove', this.ele.MOVE);
+        on(document, 'mouseup', this.ele.UP);
+    };
+
+    Drag.prototype.move = function (e) {
+        e.preventDefault();
+        this.ele.boxL = e.clientX - this.ele.l;
+        this.ele.boxT = e.clientY - this.ele.t;
+        this.computed.call(this.ele);
+    };
+
+    Drag.prototype.up = function () {
+        off(document, 'mousemove', this.MOVE);
+        off(document, 'mouseup', this.UP);
+    };
+    // 边界判断 位置处理
+    Drag.prototype.computed = function () {
+        if (this.boxL > this.maxL) {
+            this.boxL = this.maxL;
+        } else if (this.boxL <= 0) {
+            this.boxL = 0;
+        }
+        if (this.boxT > this.maxT) {
+            this.boxT = this.maxT;
+        } else if (this.boxT <= 0) {
+            this.boxT = 0;
+        }
+        this.style.left = this.boxL + 'px';
+        this.style.top = this.boxT + 'px';
+    };
+
+    // 处理this
+    Drag.prototype.handlerThis = function (fn, context) {
+        return function (e) {
+            fn.call(context, e);
+        }
+    };
+
+    new Drag(oDiv1);
+    new Drag(oDiv2);
+    new Drag(oDiv3);
+
+</script>
+</body>
+</html>

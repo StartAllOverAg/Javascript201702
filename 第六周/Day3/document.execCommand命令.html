@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        　　::selection { background:red; }
+    </style>
+</head>
+<body>
+<input type="text" id="text">
+<div id="oDiv">sdffffffffffffffffffffffffffffffffff</div>
+<button id="btn">复制</button>
+<script type="text/javascript">
+    var btn = document.getElementById('btn');
+    var text = document.getElementById('text');
+    var oDiv = document.getElementById('oDiv');
+    text.addEventListener('select', function () {
+        console.log(123);
+        var text =  this.value;
+        document.execCommand('copy', true);
+    });
+</script>
+</body>
+</html>

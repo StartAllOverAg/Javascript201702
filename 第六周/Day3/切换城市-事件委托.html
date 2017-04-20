@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        h3 {
+            cursor: pointer;
+            -webkit-user-select: none;
+            width: 100px;
+            font-size: 16px;
+            margin-left: 100px;
+        }
+
+        ul {
+            /*display: none;*/
+            width: 500px;
+            list-style: none;
+            overflow: hidden;
+            margin: 20px auto;
+            border: 1px solid black;
+            padding: 10px;
+        }
+
+        ul li {
+            -webkit-user-select: none;
+            cursor: pointer;
+            width: 80px;
+            height: 30px;
+            float: left;
+            margin: 5px;
+        }
+
+        ul li a {
+            text-align: center;
+            line-height: 30px;
+            display: inline-block;
+            width: 100%;
+            height: 100%;
+
+        }
+
+        /*ul li a:hover {*/
+        /*background-color: #CCCCCC;*/
+        /*color: #ff0000;*/
+        /*}*/
+        ul li.select {
+            background-color: red;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+<h3 id="select">选择城市</h3>
+<ul id="lists" style="display: none"></ul>
+<script type="text/javascript">
+
+    var lists = document.getElementById('lists');
+    var select = document.getElementById('select');
+    var cityLists = lists.getElementsByTagName('li');
+    document.onclick = function (e) {
+        e = e || window.event;
+        var target = e.target;
+        if (target.id != 'select' && target.id != 'lists') {
+//          if(target.className === 'lis' || target.className === 'listA'){
+//              lists.style.display = 'block';
+//          } else {
+//              lists.style.display = 'none';
+//          }
+            this.timer = setTimeout(function () {
+                lists.style.display = 'none';
+                clearInterval(document.timer);
+            }, 100);
+        }
+    };
+    // 切换城市
+    var cities = ['北京', '上海', '承德', '石家庄', '天津', '雄县', '赵县', '沧州', '保定', '邯郸', '磁县', '北京', '上海', '承德', '石家庄', '天津', '雄县', '赵县', '沧州', '保定', '邯郸', '磁县'];
+
+    var str = '';
+    for (var i = 0; i < cities.length; i++) {
+        str += '<li class="lis">';
+        str += '<a class="listA">' + cities[i] + '</a>';
+        str += '</li>';
+    }
+    lists.innerHTML = str;
+    select.onclick = function () {
+        this.flag = lists.style.display;
+        lists.style.display = this.flag === 'none' ? 'block' : 'none';
+    };
+    lists.onclick = function (e) {
+        e = e || window.event;
+        var target = e.target;
+        if (target.tagName.toLowerCase() === 'a') {
+            select.innerHTML = target.innerText;
+            for (var i = 0; i < cityLists.length; i++) {
+                cityLists[i].className = 'lis';
+            }
+            target.parentNode.className = 'select';
+        }
+    }
+</script>
+</body>
+</html>

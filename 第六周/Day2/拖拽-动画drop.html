@@ -68,7 +68,8 @@
             this.t = e.clientY - this.offsetTop;
             this.winW = document.documentElement.clientWidth || document.body.clientWidth;
             this.winH = document.documentElement.clientHeight || document.body.clientHeight;
-
+            this.maxL =  this.winW - oDivW;
+            this.maxT =  this.winH - oDivH;
 
             // 通过一不销毁的作用域 将 当前this 保存 私有变量
 //            function handler(fn, context) {  // context = this = oDiv;

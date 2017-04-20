@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script type="text/javascript">
+
+    //    订阅  发布 退订
+    //     on  fire off
+    function EventEmitter() {
+        // 将实例的 订阅主题 事件 统一放到 handlers里进行管理
+        this.handlers = {};
+    }
+    EventEmitter.prototype.on = function (type, fn) {
+        var handlers = this.handlers[type] || (this.handlers[type] = []);
+        for(var i = 0; i < handlers.length; i++){
+            if(handlers[i] === fn){
+                return;
+            }
+        }
+        handlers.push(fn);
+    };
+    EventEmitter.prototype.fire = function (type) {
+           var handlers = this.handlers[type];
+           if(handlers instanceof Array) {
+               for(var i = 0; i < handlers.length; i++){
+                   if(typeof  handlers[i] === 'function') { // null() 报错
+                       handlers[i](arguments[1]);
+                   }
+               }
+           }
+    };
+    EventEmitter.prototype.off = function (type, fn) {
+        var handlers = this.handlers[type];
+        if(handlers instanceof Array) {
+            for(var i = 0; i < handlers.length; i++){
+                if(handlers[i] === fn) {
+                    handlers[i] = null;
+                    break;
+                }
+            }
+        }
+    };
+
+
+    var teacher = new EventEmitter;
+    var hotWater = new EventEmitter;
+    teacher.on('放假了',fn1);
+    teacher.on('放假了',fn2);
+    teacher.on('放假了',fn3);
+    teacher.say = function (type) {
+        console.log('放假三天');
+        setTimeout(function () {
+            teacher.fire(type);
+        },1000);
+    };
+//    teacher.say('放假了');
+
+    hotWater.on('水烧开了',fe1);
+    hotWater.on('水烧开了',fe2);
+    hotWater.on('水烧开了',fe3);
+
+   hotWater.say = function (type) {
+       console.log('水烧开了');
+       hotWater.fire(type)
+   };
+
+   hotWater.off('水烧开了',fe2);
+    hotWater.say('水烧开了');
+//
+    console.log(hotWater.handlers);
+//    console.log(teacher.handlers);
+
+    function fn1() {
+        console.log('可以出去得瑟了');
+    }
+    function fn2() {
+        console.log('可以出去耍了');
+    }
+    function fn3() {
+        console.log('可以出去(｡･∀･)ﾉﾞ嗨了');
+    }
+
+    function fe1() {
+        console.log('可以洗脸了');
+    }
+    function fe2() {
+        console.log('可以洗澡了');
+    }
+    function fe3() {
+        console.log('可以喝水了');
+    }
+    //  teacher.on(type, fn);
+    //  teacher.fire(type);
+    //  teacher.off(type, fn);
+</script>
+</body>
+</html>

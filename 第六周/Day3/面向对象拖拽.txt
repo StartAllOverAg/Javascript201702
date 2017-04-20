@@ -1,0 +1,13 @@
+down move up computed 里面this都是当前元素
+down move up handlerThis computed 这些方法都在Drag这个类的原型上
+
+原型上的方法 是 当前实例 公有属性和方法
+
+原型上的方法 要通过 当前类的实例 通过原型链 查找 和使用
+实例.属性名
+
+
+只要在函数里面需要用到 down move up handlerThis computed这些方法
+必须保证这个函数里this 是当前实例 因为这些方法都在Drag这个类的原型上 只有Drag的实例才能调用
+
+其他this 都修改为当前元素 this.ele
