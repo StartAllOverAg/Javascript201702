@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        #box {
+            width: 650px;
+            margin: 20px auto;
+        }
+        /*#box>li {*/
+           /*float: left;*/
+        /*}*/
+        #box li {
+            position: relative;
+            margin-left: 10px;
+        }
+        #box ul {
+            margin-left: 10px;
+        }
+        #box em {
+            position: absolute;
+            top: 3px;
+            width: 16px;
+            height: 16px;
+            background: url("img/icon.png") no-repeat -60px -28px;
+            cursor: pointer;
+        }
+        #box span {
+            -webkit-user-select: none;
+            padding-left: 20px;
+        }
+
+        #box em.open {
+           background-position: -43px -28px;
+        }
+        #box ul {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<ul id="box">
+    <li>
+        <em></em><span>第一级第一个</span>
+        <ul>
+            <li>
+                <em></em><span>第二级第一个</span>
+                <ul>
+                    <li><span>第三级第一个</span></li>
+                    <li><span>第三级第二个</span></li>
+                    <li><span>第三级第三个</span></li>
+                </ul>
+            </li>
+            <li>
+                <em></em><span>第二级第二个</span>
+                <ul>
+                    <li>
+                        <em></em><span>第三级第一个</span>
+                        <ul>
+                            <li><span>第四级第一个</span></li>
+                            <li><span>第四级第二个</span></li>
+                            <li><span>第四级第三个</span></li>
+                        </ul>
+                    </li>
+                    <li>  <em></em><span>第三级第二个</span>
+                        <ul>
+                            <li><span>第四级第一个</span></li>
+                            <li><span>第四级第二个</span></li>
+                            <li><span>第四级第三个</span></li>
+                        </ul></li>
+                    <li>  <em></em><span>第三级第三个</span>
+                        <ul>
+                            <li><span>第四级第一个</span></li>
+                            <li><span>第四级第二个</span></li>
+                            <li><span>第四级第三个</span></li>
+                        </ul></li>
+                </ul>
+            </li>
+            <li>
+                <em></em><span>第二级第三个</span>
+                <ul>
+                    <li><span>第三级第一个</span></li>
+                    <li><span>第三级第二个</span></li>
+                    <li><span>第三级第三个</span></li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <em></em><span>第一级第二个</span>
+        <ul>
+            <li>
+                <em></em><span>第二级第一个</span>
+                <ul>
+                    <li><span>第三级第一个</span></li>
+                    <li><span>第三级第二个</span></li>
+                    <li><span>第三级第三个</span></li>
+                </ul>
+            </li>
+            <li>
+                <em></em><span>第二级第二个</span>
+                <ul>
+                    <li><span>第三级第一个</span></li>
+                    <li><span>第三级第二个</span></li>
+                    <li><span>第三级第三个</span></li>
+                </ul>
+            </li>
+            <li>
+                <em></em><span>第二级第三个</span>
+                <ul>
+                    <li><span>第三级第一个</span></li>
+                    <li><span>第三级第二个</span></li>
+                    <li><span>第三级第三个</span></li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <em></em><span>第一级第三个</span>
+        <ul>
+            <li>
+                <em></em><span>第二级第一个</span>
+                <ul>
+                    <li><span>第三级第一个</span></li>
+                    <li><span>第三级第二个</span></li>
+                    <li><span>第三级第三个</span></li>
+                </ul>
+            </li>
+            <li>
+                <em></em><span>第二级第二个</span>
+                <ul>
+                    <li><span>第三级第一个</span></li>
+                    <li><span>第三级第二个</span></li>
+                    <li><span>第三级第三个</span></li>
+                </ul>
+            </li>
+            <li>
+                <em></em><span>第二级第三个</span>
+                <ul>
+                    <li><span>第三级第一个</span></li>
+                    <li><span>第三级第二个</span></li>
+                    <li><span>第三级第三个</span></li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+</ul>
+<script type="text/javascript" src="utils.js"></script>
+<script type="text/javascript">
+    var oBox = document.getElementById('box');
+    var oSpans = oBox.getElementsByTagName('span');
+    for(var i = 0; i < oSpans.length; i++){
+        var prevEm = utils.prev(oSpans[i]);
+        if(prevEm && prevEm.tagName.toLowerCase() === 'em') {
+            oSpans[i].style.cursor = 'pointer';
+        }
+    }
+    // 后代元素中em 和span 都要绑定 click事件 我们 可以利用 事件委托的方式 给最外层容器绑定click事件
+    // 根据 事件 对象中 事件源 来判断 当前点击的是哪一个元素 进行相应处理（控制相应兄弟ul菜单显示和隐藏）
+    oBox.onclick = function (e) {
+        e = e || window.event;
+        var target = e.target || e.srcElement;
+        // 判断当前点击的 是不是 em 或 span
+        if(target.tagName.toLowerCase() === 'em') {
+            controlOpen(utils.next(target));
+        } else if(target.tagName.toLowerCase() === 'span') {
+            controlOpen(target);
+        }
+    };
+
+    function controlOpen(curEle) {
+         var oEm = utils.prev(curEle); // 当前span的 哥哥元素
+         var nextUl = utils.next(curEle); // 当前span的 兄弟ul菜单
+         // 判断 当前这个span有没 上一个哥哥元素 并且  是不是 em 元素 如果有em元素 就说明 是有可以展开收起的菜单
+         if(oEm && oEm.tagName.toLowerCase() === 'em') {
+             // 得到当前 ul菜单的显示（展开）/隐藏（收起）状态
+             var isBlock = utils.css(nextUl, 'display');
+            if(isBlock === 'none') { // 当前收起状态 我们就要让他展开
+                // 展开就是让 当前 ul菜单显示
+                nextUl.style.display = 'block';
+                // 展开的同时 让 em图标 变成 ‘—’ add class open
+                utils.addClass(oEm, 'open');
+            } else { // 当前展开 我们就要让他收起
+                // 收起 就是让 当前 ul菜单 隐藏
+                nextUl.style.display = 'none';
+                // 收起的同时 让 em图标 变成 ‘+’remove class open
+                utils.removeClass(oEm, 'open');
+                // 获取当前 ul 里面所有 后的ul菜单
+                var oUls = nextUl.getElementsByTagName('ul');
+                // 获取当前 ul 里面所有 em
+                var oEms = nextUl.getElementsByTagName('em');
+                // 控制当前 ul菜单 所有后代 ul 收起 和 em 为收起状态
+                for(var i = 0; i < oUls.length; i++){
+                    oUls[i].style.display = 'none';
+                    utils.removeClass(oEms[i], 'open');
+                }
+            }
+         }
+
+    }
+
+</script>
+</body>
+</html>
