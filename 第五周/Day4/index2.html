@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+        .ct {
+            height: 100px;
+            width: 100px;
+            border: 1px red solid;
+            position: absolute;
+            overflow: hidden;
+            top: 50%;
+            left: 50%;
+        }
+
+        .hot_info {
+            position: absolute;
+            background: #333;
+            background: rgba(0, 179, 138, .9);
+            filter: alpha(opacity=90);
+            width: 100%;
+            height: 100%;
+            transition: all 300ms ease;
+            display: block;
+            left: -100%;
+            top: 0;
+            transition: all 300ms ease;
+            /*transition-duration:2s;*/
+            text-align: center;
+            color: #fff
+        }
+    </style>
+</head>
+<body>
+<div class="ct" onmouseover="fun1(event);" onmouseout="fun2(event);">
+    <div class="hot_info">
+        <h5 title="凯泰铭">MTM</h5>
+        <em></em>
+        <p title="车险反欺诈领导者，立足互联网车险市场">
+            中国医疗管理品牌领导者
+        </p>
+    </div>
+</div>
+<!--<script src="js+utils+donghuan/jquery-1.11.3.js"></script>-->
+<script type="text/javascript">
+    //当然这样绑定事件函数是不对的
+    var div = document.getElementsByTagName("div")[0];
+    var div2 = document.getElementsByClassName("hot_info")[0];
+    function fun1(event) {
+        var x = event.pageX - div.offsetLeft;//(得到鼠标在框中的坐标)  X轴坐标
+        var y = event.pageY - div.offsetTop;//(得到鼠标在框中的坐标)  Y轴坐标
+        var H = div.clientHeight;   //div的padding+内容高度
+        var W = div.clientWidth;        //div的  padding+内容宽度
+        var k = Math.floor(H / W);//为了防止不能整除
+        if ((k * x) >= y && (H - k * x) >= y) {//这是判断从上方进入,这边简化处理不对等于情况做特别处理
+            console.log("从上方进入");
+            div2.style.left = "0px";
+            div2.style.top = "0px"
+        }
+        if ((k * x) < y && (H - k * x) < y) {
+            console.log("从下方进入");
+            div2.style.left = "0px";
+            div2.style.top = "0px"
+        }
+        if ((k * x) < y && (H - k * x) > y) {
+            console.log("从左边进入");
+            div2.style.left = "0px";
+            div2.style.top = "0px";
+            //todo
+        }
+        if ((k * x) > y && (H - k * x) < y) {
+            console.log("从右边进入");
+            div2.style.left = "0px";
+            div2.style.top = "0px"
+        }
+    }
+
+    function fun2(event) {
+        var x = event.pageX - div.offsetLeft;//(得到鼠标在框中的坐标)
+        var y = event.pageY - div.offsetTop;//(得到鼠标在框中的坐标)
+        var H = div.clientHeight;
+        var W = div.clientWidth;
+        var k = Math.floor(H / W);//为了防止不能整除
+        if ((k * x) >= y && (H - k * x) >= y) {//这是判断从上方进入,这边简化处理不对等于情况做特别处理
+            console.log("从上方离开");
+            //div2.style.top="-100px"
+            div2.style.left = "0px";
+            div2.style.top = "-100px"
+        }
+        if ((k * x) < y && (H - k * x) < y) {
+            console.log("从下方离开");
+            div2.style.left = "0px";
+            div2.style.top = "100px"
+        }
+        if ((k * x) < y && (H - k * x) > y) {
+            console.log("从左边离开");
+            div2.style.left = "-100px";
+            div2.style.top = "0px";
+        }
+        if ((k * x) > y && (H - k * x) < y) {
+            console.log("从右边离开");
+            div2.style.left = "100px";
+            div2.style.top = "0px";
+        }
+    }
+</script>
+</body>
+</html>
