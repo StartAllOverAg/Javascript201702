@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script type="text/javascript">
+    // Symbol  是一个数据结构 返回值Symbol值
+
+    // 在对象中 保证 属性名唯一性
+    var s1 = Symbol(123);
+    console.log(s1);
+    var s2 = Symbol(123);
+    console.log(s2 === s1);
+
+//    var obj = {
+//        [s1]: 'symbol1',
+//        [s2]: 'symbol1'
+//    };
+//    console.log(obj[s1]);
+//    console.log(obj[s2]);
+    var obj = {};
+    obj[s1] = 'liwenli';
+    obj[s2] = 'zhufeng';
+//    console.log(obj[s1]);
+
+//    for(var key in obj) {
+//        console.log(key);
+//    }
+//
+//    for(var val of obj){
+//        console.log(val);
+//    }
+    // 只能遍历出来 key
+    console.log(Object.getOwnPropertySymbols(obj)); // [Symbol(123), Symbol(123)]
+    var keys = Object.getOwnPropertySymbols(obj);
+
+    keys.forEach((item) => {
+        console.log(obj[item]); //  liwenli zhufeng
+    });
+
+
+
+</script>
+</body>
+</html>

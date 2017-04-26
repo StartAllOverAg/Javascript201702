@@ -205,8 +205,8 @@ var utils = (function () {
         getCss: getCss,
         setCss: setCss,
         getByClass: getByClass,
-        hasClass: hasClass,
-        addClass: addClass,
+        hasClass,
+        addClass,
         removeClass: removeClass,
         toggle: toggle
     }

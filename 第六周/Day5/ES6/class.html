@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script type="text/javascript">
+    // class 定义类
+
+//    function Fn() {
+//          this.a = 100;
+//          this.b = 200;
+//    }
+//    new Fn;
+
+    // class 定义类
+
+//    class Fe {
+//       constructor() {
+//
+//       }
+//    }
+//     new Fe;
+
+
+
+    function Fn() {
+        this.a = 100;
+        this.b = 200;
+    }
+    Fn.prototype.say = function () {
+
+    };
+    new Fn;
+
+
+//    // 给实例添加属性
+//    class Fe {
+//        constructor() { // 类本身 在里面 this.xxx是给当前实例添加私有属性
+//            this.a = 100;
+//            this.b = 200;
+//        }
+//        // 在原型上添加 方法
+//        add(){
+//            console.log('add');
+//        }
+//
+//        // 给类本身添加静态属性方法 （当做普通对象添加属性）
+//        static sayHi(){
+//            console.log('sayHi');
+//        }
+//    }
+//    let fe = new Fe;
+//    let fe2 = new Fe;
+//    fe.add();
+//    fe2.add();
+//    console.log(fe.add === fe2.add);
+//    Fe.sayHi();
+
+//    class A {
+//        constructor(a, b) {
+//            this.name = a;
+//            this.age = b;
+//        }
+//    }
+//
+//    let a = new A('zhufeng', 10);
+//    console.log(a);
+
+
+    // 类的继承
+    class A {
+        constructor (name) {
+            this.say = name;
+        }
+    }
+
+    // B类继承A类  子类没this 对象 需要 从父类A继承过来
+    class B extends A {
+        constructor(b) {
+          super(b); // 代表父类构造函数
+            this.fe = 'fe';
+        }
+    }
+
+    let b = new B('byebye'); // b得到的是 父类A里产出this对象    b = new A
+    console.log(b);
+
+ // promise  es6 模块 import export ...
+</script>
+</body>
+</html>

@@ -106,7 +106,7 @@
         for (var i = 0; i < other.length; i++) {
             utils.css(other[i], 'zIndex', 0);
         }
-
+        that.flag = false;
         // 执行渐变动画
         zfAnimate({
             ele: curImg,
@@ -139,9 +139,9 @@
                 that.autoMove();
             }, that.interTime);
         };
-        
+
         // 焦点点击事件
-        for(var i = 0; i < that.focusList.length; i++){
+        for (var i = 0; i < that.focusList.length; i++) {
             var curLi = that.focusList[i];
             curLi.ind = i;
             curLi.onmouseover = function () {
@@ -151,21 +151,19 @@
 
         // 左右切换事件
         that.left.onclick = function () {
-            if(that.flag) {
+            if (that.flag) {
                 that.step--;
-                if(that.step === -1) {
-                    that.step = that.imgLength-1;
+                if (that.step === -1) {
+                    that.step = that.imgLength - 1;
                 }
                 that.autoMove(that.step);
-                that.flag = false;
             }
 
         };
 
         that.right.onclick = function () {
-            if(that.flag)  {
+            if (that.flag) {
                 that.autoMove();
-                that.flag = false;
             }
         };
 
@@ -187,10 +185,10 @@
         this.getData(); // 获取数据调用
         this.bindData(); // 绑定数据调用
         this.delayImg(); // 图片延迟加载调用
-        this.timer = setInterval(function () {
+        this.timer = setInterval(function () { // 自动轮播
             that.autoMove();
         }, this.interTime);
-        this.bindEvent();
+        this.bindEvent(); // 绑定事件
     };
 
     // 将Banner类挂载到全局

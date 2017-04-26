@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<ul id="lists"></ul>
+<script type="text/javascript">
+    // startsWith endsWith includes
+    //    let str = 'zhufengpeixun';
+
+    //    console.log(str.startsWith('zhu')); // 是否以某个字符开头 是 true 否则 false
+    //    console.log(str.endsWith('xun')); // 是否以某个字符结尾 是 true 否则 false
+    //    console.log(str.includes('feng')); // 是否包含某些字符 是 true 否则 false
+
+    //  String.prototype.myStartsWith = function (str) {
+    //      var reg = new RegExp('^'+str+'');
+    //      return reg.test(this);
+    //  };
+    //  console.log(str.myStartsWith('111zhu'));
+    //    String.prototype.myEndsWith = function (str) {
+    //        var reg = new RegExp(''+str+'$');
+    //        return reg.test(this);
+    //    };
+    //    console.log(str.myEndsWith('peixun'));
+
+    //    String.prototype.myIncludes = function (str) {
+    //        var reg = new RegExp(''+str+'');
+    //        return reg.test(this);
+    //    };
+    //    console.log(str.myIncludes('1peixun'));
+
+    // 重复字符串 返回一个重复后的新字符串 参数 指定重复次数
+    //    console.log('zhufeng'.repeat(3));
+
+    //    for of 遍历方法
+
+    //    let str = 'zhufengpeixun';
+    //    for(let key of str) {
+    //        console.log(key);
+    //    }
+
+    let arr = [1, 2, 3];
+    // 遍历出数组中每一个
+    //    for(let key of arr){
+    //        console.log(key);
+    //    }
+
+    // 遍历出数组中的 key(索引)
+    //    for(let key of arr.keys()){
+    //        console.log(key);
+    //    }
+
+    // 遍历出数组中 索引和每一项 并且 把每一轮 遍历出来的索引和每一项 放在一个数组里
+    //    for(let key of arr.entries()){
+    //        console.log(key);
+    //    }
+    //     [0, 1]
+    //     [1, 2]
+    //     [2, 3]
+
+    // 模板字符串（字符串拼接）
+    let user = 'liwenli';
+    let str1 = '你好 我叫 ' + user + ' 来自 hebei';
+    // 英文输入法 Esc键 下面那个 按键字符
+    // 拼接变量 ` ${变量名}`；
+    let str2 = `你好 我叫 ${user} 来自 hebei`;
+    console.log(str1);
+    console.log(str2);
+    var lists = document.getElementById('lists');
+    //    var arrs = ['aaa', 'bbb', 'ccc'];
+    //    var liStr = '';
+    //    for(var i = 0; i < 3; i++) {
+    //        liStr += '<li>'+arrs[i]+'</li>'
+    //        liStr += `<li>${arrs[i]}</li>`
+    //    }
+    //    var liStr = '<li>11111</li>' +
+    //        '<li>2222</li>' +
+    //        '<li>33333</li>';
+
+    //    var liStr = `
+    //     <li>aaaa</li>
+    //     <li>aaaa</li>
+    //     <li>aaaa</li>
+    //    `;
+    //    lists.innerHTML = liStr;
+
+
+</script>
+</body>
+</html>

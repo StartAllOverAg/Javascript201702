@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<button>btn1</button>
+<button>btn2</button>
+<button>btn3</button>
+<button>btn4</button>
+<script type="text/javascript">
+
+    // es6 ECMAScript 2015 es2015
+    // 工具：babel 将es6 编译成 es5
+
+    // let 声明变量 var
+    // 1.不存在变量提升
+    //    console.log(num); // num is not defined
+    //    let num = 123;
+
+    // 2.let声明的变量 不能重复声明
+    //    var num = 19;
+    //    var num = 20;
+    //    console.log(num);
+    //    var num = 19;
+    //    let num = 20;
+    //    console.log(num);
+
+    //    console.log(typeof num);
+    //    let num = 20;
+
+    // 块级作用域   代码块{code}
+    // let声明的变量  在当前let所在作用域中有效
+    //    {
+    //
+    //        var num1 = 'hello11';
+    //        let num2 = 'hello22';
+    //        console.log(num2);
+    //
+    //    }
+    //    console.log(num1);
+    //    console.log(num2);
+
+    //    let num2 = 'world';
+    //    {
+    //        console.log(num2);
+    //    }
+
+    // 块级作用域可以多层嵌套
+    //    {{{{{
+    //        let num = 'ni hao';
+    //        {{
+    //            console.log(num);
+    //        }}
+    //
+    //    }}}}}
+
+    // 在for循环语句中 用let 并不会泄露成 全局变量
+    //    for(let i = 0; i < 5; i++){
+    //
+    //    }
+    //    console.log(i);
+    //    var arr = [];
+    //    for(var i = 0; i < 5; i++) {
+    //        arr[i] = function () {
+    //            console.log(i);
+    //        }
+    //    }
+    //    arr[3](); // 5
+    // let 在 for 循环句形成父级作用域 循环体是 子作用域
+    //    var arr = [];
+    //    for(let i = 0; i < 5; i++) {
+    ////        let i =3; // 形成一个子作用域
+    //        arr[i] = function () {
+    //            console.log(i);
+    //        }
+    //    }
+    //    arr[3](); // 3
+
+    //    var btns = document.getElementsByTagName('button');
+    // for语句中  let i 储存的是当前这一轮值
+    // let 每循环一次  都是在当前 的父级作用域中 重新声明一次
+    //    for(let i = 0; i < btns.length; i++) {
+    //        btns[i].onclick = function () {
+    //            alert(i);
+    //        }
+    //    }
+
+
+    // let 声明变量 只能在let 声明后 使用
+    //    let num = 22;
+    //    if(true) {
+    //        console.log(num);
+    //        let num = 15;
+    //    }
+
+    //    var num = 33;
+    //    if(true) {
+    ////        num = 15;
+    //        let num = 66;
+    //        console.log(num);
+    //    }
+    //   console.log(num);
+
+    ////////////////////////////////////////////////////////////////////////////////////
+
+    // const 声明一个只读常量 恒定不变的量
+    //    const fe = 'hello';
+    //    console.log(fe);
+    //    fe = 'nihao';
+    // const 在声明时候 必须 要声明+定义
+    //    const fe;
+    //    fe = 'ni hao';
+    //    console.log(fe);
+    //    const fe = 'zhufeng';
+    //    console.log(fe);
+
+    // 形成块级作用域
+    {
+//        const foo = 100;
+//        console.log(foo);
+    }
+    //    console.log(foo); // foo is not defined
+    //    const foo = 100;
+    //    const foo = 200;
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input type="text" id="textVal">
+<h3 id="text">{{val}}</h3>
+<script type="text/javascript">
+
+
+    // 正常的严格比较
+    //    console.log(Object.is(NaN,NaN));
+    //    console.log(Object.is(0,-0));
+
+    // Object.assign 合并和克隆对象
+    //    var obj1 = {n: 200};
+    //    var obj2 = {m: 300, n: 666};
+    //    Object.assign(obj1, obj2);
+    //    console.log(obj1);// {n:666, m: 300}
+
+    //
+    //    var obj1 = {name: 'zhufeng'};
+    //    var newObj = Object.assign({}, obj1);
+
+    // 浅拷贝
+    //    newObj.name = 'liwenli';
+    //    console.log(newObj); // {name:'liwenli'};
+    //    console.log(obj1); // {name:'zhufeng'};
+
+    // obj1.__proto__ = obj2 设置原型
+    var obj1 = {name: 'obj1'};
+    var obj2 = {cc: 'zhufeng'};
+    // 只是将 obj1.__proto__ 指向 改为obj2
+    //    var obj3 = Object.setPrototypeOf(obj1,obj2);
+    //    console.log(obj3 === obj1); // true
+    //    console.log(obj3);
+
+    Object.setPrototypeOf(obj1, obj2);
+    console.log(obj1);
+
+    // 获取指定对象 原型
+    //    console.log(Object.getPrototypeOf(obj1));
+
+    //    console.log(Object.getPrototypeOf(obj2));
+
+
+    //    function setProto(target, proto) {
+    //         target.__proto__ = proto;
+    //         return  target;
+    //    }
+    //    console.log(obj2);
+
+    //    var obj = {};
+    // 对象访问器 getter  setter
+    //    Object.defineProperty(obj, 'title', {
+    //         get: function () {
+    //            console.log('获取执行');
+    //            return 'kuweb';
+    //        },
+    //        set: function (value) {
+    //            console.log(value);
+    //            console.log('设置值执行');
+    //        }
+    //    });
+    //    console.log(obj.title);
+    //    obj.title = 'es6';
+
+    //  双向数据绑定实现 （vue双向数据绑定里的原理） 视图改变数据 数据改变视图 mvvm
+    var textVal = document.getElementById('textVal');
+    var text = document.getElementById('text');
+    var obj = {};
+    Object.defineProperty(obj, 'title', {
+        set: function (value) {
+            textVal.value = value;
+            text.innerHTML = value;
+        }
+    });
+    textVal.oninput = function () {
+        obj.title = this.value;
+    };
+    // setTimeout(function () {
+    //     obj.title = 'liwenli';
+    // },2000);\
+
+    // 模板引擎
+    var reg = /\{\{(.*)\}\}/;
+    var textStr = text.innerHTML;
+    //    {{val}}
+    setTimeout(function () {
+        var data = {val: 'hello ni hao'};
+        text.innerHTML = textStr.replace(reg, function (a, b) {
+            return data[arguments[1]];
+
+        });
+    }, 2000);
+
+
+    // 简洁语法
+    // 将foo变量存储的值 保存到 obj1的foo属性上 foo属性名 和这个foo变量名 相同 才可以简写
+    //    var foo = 'zhufeng';
+    //    var obj1 = {foo, bar: 'hello'}; // {foo:foo} => {foo:'zhufeng'}
+    //    console.log(obj1);
+
+//    var objFn = {
+        // 简写
+//        fn(){
+//            console.log('fn111');
+//        }
+        // 等同于
+//       fn: function fn() {
+//           console.log('fn111');
+//       }
+//    };
+//    objFn.fn();
+
+//    var objs = {a: 'aaa', b: 'bbbb', c: 'ccccccc'};
+//    console.log(Object.keys(objs)); // key 将指定对象 属性名遍历出来放到一个 数组里
+//    console.log(Object.values(objs)); // value 将指定对象 属性值遍历出来放到一个 数组里
+//    console.log(Object.entries(objs)); // entries 将指定对象 属性值遍历出来组成 数组,  里每项 并且每一项也是数组  数组里 第一项 key 第二项 value [['a','aaa'], ['b','bbb'], ['c','cccc'],]
+
+
+
+</script>
+</body>
+</html>

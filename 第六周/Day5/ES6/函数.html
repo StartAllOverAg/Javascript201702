@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script type="text/javascript">
+     // 默认值 不传或者 是传undefined 默认值才会生效
+
+//     function animate(ele,duration) {
+//         duration = duration || 3000;
+//     }
+//
+//     animate('ele')
+//     function animate(ele, duration = 3000) {
+//         console.log(duration);
+//     }
+//     animate('ele');
+
+//     function getByclass(context = document, ele) {
+//          console.log(context);
+//     }
+//     getByclass();
+
+//     function add({x=1,y=2}) {
+//         console.log(x, y);
+//         console.log(x+y);
+//     }
+//     add();
+
+
+     // 默认值和解构赋值结合起来
+//     let {x=100,y=200} = {x:600};
+//     console.log(x,y);
+//     let {x=100} = {x:600};
+//     console.log(x);
+
+//     function add({x=1,y=2}={}) {
+//         console.log(x, y); // 3 6
+//         console.log(x+y); // 9
+//     }
+//     add({x:3,y:6});
+//     let {x=1,y=2}={}
+//     let {x=1,y=2} = {x:3,y:6}
+
+//     function add({x=1,y=2}={}) {
+     //         console.log(x, y); // 3 2
+     //         console.log(x+y); // 5
+     //     }
+     //     add({x:3});
+
+//    let [x=100, y=200,z] = [2,,33];
+//    console.log(x,y,z);
+//    let [x=110, y=x] = [];
+//    console.log(x, y);
+
+     // 函数length 不包含 有默认值的形参
+//     function fn(x,y) {
+//
+//     }
+//     console.log(fn.length);
+//     console.log(fn.name);
+
+    // 箭头函数
+//     let fn = () => console.log('不传参的时候');
+
+     // 只传一个参数的时候
+//    let fn = a => console.log(a);
+//    fn('fnnn');
+
+     // 返回值
+//     let fn = a => a; // return  a
+//     console.log(fn('nihao'));
+//     let fe = () => 'hello ES6';
+//     console.log(fe());
+
+//    let fn = a => {
+//        if(a===1) {
+//            return 'hello'
+//        }
+//        return 'world';
+//    };
+//     console.log(fn(1));
+
+//    let fn = (...reset) => {
+     //        console.log(reset);
+     //    };
+     //    fn(5,5,5);
+
+     // 箭头函数里面this 指向 外层this
+//    window.user = 'winName';
+//    var obj = {
+//        user: 'objName',
+//        fn() {
+//            console.log(this);
+//            setTimeout(()=>{
+//                console.log(this);
+//            },1000)
+//        }
+//    };
+//    obj.fn();
+
+//     obj.fe = function () {
+//         (()=> {
+//             console.log(this);
+//         })();
+//     };
+//
+//     obj.fe();
+
+//     window.user = 'winName';
+//     var obj = {
+//         user: 'objName',
+////         that: this,
+//         fn: () => {
+//             console.log(this); // window
+//             setTimeout(()=>{
+//                 console.log(this); // window
+//             },1000)
+//         }
+//     };
+//     obj.fn();
+
+//     console.log(obj.that);
+
+
+//    [1,2,3,4].forEach((item) => {
+//        console.log(item);
+//    });
+
+//     let fn = () => {
+//
+//     };
+//     fn()
+
+
+
+</script>
+</body>
+</html>
