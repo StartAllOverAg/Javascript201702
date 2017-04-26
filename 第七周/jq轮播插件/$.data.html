@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<div id="oDiv">123132</div>
+		<script src="jquery-1.11.3.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(function() {
+				// 在元素自定义属性上 保存属性值 attr只能保存 字符串的值
+				var obj = {
+					id: 1,
+					name: 'liwenli'
+				};
+				$('#oDiv').attr('list', obj);
+				var data = $('#oDiv').attr('list');
+				console.log(data); // ‘[object Object]’
+
+				// jq对象.data用来在元素上保存数据  可以存储字符串和对象数据
+				//	  var obj = {id:1,name: 'liwenli'};
+				//	  $('#oDiv').data('list', obj);
+				//	  var data = $('#oDiv').data('list');
+				//	  console.log(data); {id:1,name: 'liwenli'};
+			});
+		</script>
+	</body>
+
+</html>

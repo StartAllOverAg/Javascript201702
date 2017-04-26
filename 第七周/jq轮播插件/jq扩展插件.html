@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		 <div id="oDiv"></div>
+		<script src="jquery-1.11.3.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			// $.extend 在jq对象自身上扩展插件
+			// $.fn.extend 在jq原型上扩展插件
+			
+			$(function () {
+				
+				$.extend({
+					add: function (a, b) {
+						return  a + b;
+					}
+				});
+				
+				 console.log($.add(10,20));
+				 
+				$.fn.extend({
+				     say: function (text) {
+				     	console.log(text);
+				     }
+				});
+				
+				$('#oDiv').say('原型上扩展插件');
+			});
+			
+		</script>
+	</body>
+</html>
